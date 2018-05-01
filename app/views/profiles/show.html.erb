@@ -1,8 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Username:</strong>
+<%= image_tag @profile.profile_pic_url(:medium) %>
+
+<h2>
   <%= @profile.username %>
+</h2>
+
+<p>
+  <%= @profile.user.email %>
 </p>
 
 <p>
@@ -11,19 +16,11 @@
 </p>
 
 <p>
-  <strong>Profile pic:</strong>
-  <%= image_tag @profile.profile_pic_url(:thumb) %>
-</p>
-
-<p>
   <strong>Rating:</strong>
   <%= @profile.rating %>
 </p>
 
-<p>
-  <strong>User:</strong>
-  <%= @profile.user.email %>
-</p>
-
-<%= link_to 'Edit', edit_profile_path(@profile) %> |
+<% if @profile.user_id == current_user.id %>
+  <%= link_to 'Edit', edit_profile_path(@profile) %> |
+<% end %>
 <%= link_to 'Back', profiles_path %>
