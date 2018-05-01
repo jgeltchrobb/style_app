@@ -10,7 +10,6 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
-    # render plain: @profile.inspect
   end
 
   # GET /profiles/new
@@ -20,6 +19,8 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
+    # render plain: @profile.inspect
+    
   end
 
   # POST /profiles
@@ -43,6 +44,7 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
+        assign_user_role
         format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
       else
@@ -70,6 +72,16 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:username, :bio, :profile_pic, :rating, :user_id)
+      params.require(:profile).permit(:username, :bio, :profile_pic, :rating, :user_id, :user_role)
+    end
+
+    def assign_user_role
+      if @profile.user_role == "stylist"
+        current_user.remove_role(:scrub)
+        current_user.add_role(:stylist)
+      elsif @profile.user_role == "scrub"
+        current_user.remove_role(:stylist)        
+        current_user.add_role(:scrub)
+      end
     end
 end
