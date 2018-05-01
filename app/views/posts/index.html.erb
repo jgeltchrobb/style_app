@@ -16,7 +16,7 @@
     <% @posts.each do |post| %>
       <tr>
         <td><%= post.content %></td>
-        <td><%= image_tag @profile.profile_pic_url(:thumb) %></td>
+        <td><%= image_tag post.image_url(:post) %></td>
         <td><%= post.owner_role %></td>
         <td><%= link_to 'Show', post %></td>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>

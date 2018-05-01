@@ -84,4 +84,5 @@ class PostsController < ApplicationController
       flash[:notice] = "You are not authorised!"
       redirect_to posts_path
     end
+    
 end

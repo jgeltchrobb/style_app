@@ -2,9 +2,13 @@
 
 
 <% @users.each do |user| %>
-  <% if user.has_role?(:scrub) %>
-    <%= user.email %>
-    <%= link_to 'Profile', profile_path(user.profile_id)%><br />
-    <br>    
-  <% end %>
+  <% @profiles.each do |profile| %>
+    <% if profile.user_id == user.id %>
+      <%= image_tag profile.profile_pic_url(:thumb) %>
+    <% end %> 
+  <% end %>   
+  
+  <%= user.email %>
+  <%= link_to 'Profile', profile_path(user.profile_id) %><br />
+  <br>    
 <% end %>

@@ -15,10 +15,12 @@ class ProfilesController < ApplicationController
 
   def stylists
     @users = User.with_role(:stylist)
+    @profiles = Profile.all
   end
 
   def scrubs
-    @users = User.with_role(:scrub)    
+    @users = User.with_role(:scrub) 
+    @profiles = Profile.all
   end
 
   # GET /profiles/new
