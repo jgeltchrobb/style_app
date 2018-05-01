@@ -1,0 +1,10 @@
+<h1>Stylists</h1>
+
+
+<% @users.each do |user| %>
+  <%= user.email %>
+  <%= user.id %>
+  <%= link_to 'Profile', profile_path(user.profile_id) %><br />
+  <br>
+<% end %>
+

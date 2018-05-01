@@ -17,6 +17,8 @@ class User < ApplicationRecord
 
   def add_profile
     Profile.create(user_id: self.id)
+    profile = Profile.where(:user_id => self.id)
+    self.profile_id = profile.first.id 
   end
 
   def can_create?(post)
