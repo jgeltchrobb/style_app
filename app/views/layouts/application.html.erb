@@ -10,6 +10,12 @@
   </head>
 
   <body>
+    <%= link_to 'Home', posts_path %>
+    <% if user_signed_in? %>
+      <%= link_to 'Your Profile', profile_path(current_user) %>
+    <% end %>
+    <%= link_to 'Stylists', stylists_path %>
+    <%= link_to 'Scrubs', scrubs_path %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>

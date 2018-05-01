@@ -6,11 +6,17 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :posts
+  has_one :profile
 
   after_create :set_role
+  after_create :add_profile
  
   def set_role
     add_role :author
+  end
+
+  def add_profile
+    Profile.create(user_id: self.id)
   end
 
   def can_create?(post)

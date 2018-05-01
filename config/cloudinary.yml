@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: masho
+  api_key: '387911926311381'
+  api_secret: OpA873Cqi0zrQ7KX5TdXt6EeU9M
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: masho
+  api_key: '387911926311381'
+  api_secret: OpA873Cqi0zrQ7KX5TdXt6EeU9M
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: masho
+  api_key: '387911926311381'
+  api_secret: OpA873Cqi0zrQ7KX5TdXt6EeU9M
+  enhance_image_tag: true
+  static_image_support: false

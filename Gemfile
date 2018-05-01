@@ -67,3 +67,9 @@ gem "devise", "~> 4.4"
 
 # Added at 2018-05-01 09:05:31 +1000 by jordan:
 gem "rolify", "~> 5.2"
+
+# Added at 2018-05-01 13:41:57 +1000 by jordan:
+gem "carrierwave", "~> 1.2"
+
+# Added at 2018-05-01 13:42:28 +1000 by jordan:
+gem "cloudinary", "~> 1.9"

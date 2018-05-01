@@ -1,0 +1,10 @@
+<h1>Scrubs</h1>
+
+
+<% @users.each do |user| %>
+  <% if user.has_role?(:scrub) %>
+    <%= user.email %>
+    <%= link_to 'Profile', profile_path(user)%><br />
+    <br>    
+  <% end %>
+<% end %>
