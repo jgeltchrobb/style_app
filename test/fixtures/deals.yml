@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stylist_agree?: false
+  scrub_agree?: false
+  paid?: false
+  profile: one
+  user: one
+  offer: one
+
+two:
+  stylist_agree?: false
+  scrub_agree?: false
+  paid?: false
+  profile: two
+  user: two
+  offer: two

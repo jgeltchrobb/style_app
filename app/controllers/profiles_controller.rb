@@ -11,6 +11,7 @@ class ProfilesController < ApplicationController
   # GET /profiles/1.json
   def show
     @profile = Profile.find(params[:id])
+    @offer = Offer.all.where(:user_id => @profile.user_id)
   end
 
   def stylists
@@ -81,7 +82,7 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:username, :bio, :profile_pic, :rating, :user_id, :user_role)
+      params.require(:profile).permit(:username, :bio, :profile_pic, :rating, :user_id, :user_role, :has_offers)
     end
 
     def assign_user_role

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Stylist agree?:</strong>
+  <%= @deal.stylist_agree %>
+</p>
+
+<p>
+  <strong>Scrub agree?:</strong>
+  <%= @deal.scrub_agree %>
+</p>
+
+<p>
+  <strong>Paid?:</strong>
+  <%= @deal.paid %>
+</p>
+
+<p>
+  <strong>Profile:</strong>
+  <%= @deal.profile_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @deal.user_id %>
+</p>
+
+<p>
+  <strong>Offer:</strong>
+  <%= @deal.offer_id %>
+</p>
+
+<%= link_to 'Edit', edit_deal_path(@deal) %> |
+<%= link_to 'Back', deals_path %>

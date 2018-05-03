@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  price: 9.99
+  time: 1
+  in_person?: false
+  user: one
+
+two:
+  price: 9.99
+  time: 1
+  in_person?: false
+  user: two

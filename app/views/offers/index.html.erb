@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @offers.first.profile.username %>'s Offers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Price</th>
+      <th>Time</th>
+      <th>In person</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @offers.each do |offer| %>
+      <tr>
+        <td><%= offer.price %></td>
+        <td><%= offer.time %></td>
+        <td><%= offer.in_person %></td>
+        <td><%= offer.user.email %></td>
+        <td><%= link_to 'Show', offer %></td>
+        <td><%= link_to "Request", new_deal_path(params: {:deal => {:price => offer.price, :time => offer.time, :in_person => offer.in_person, :offer_id => offer.id, :user_id => current_user.id, :profile_id => offer.profile_id}}) %></td>
+        <td><%= link_to 'Edit', edit_offer_path(offer) %></td>
+        <td><%= link_to 'Destroy', offer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Offer', new_offer_path %>
+
