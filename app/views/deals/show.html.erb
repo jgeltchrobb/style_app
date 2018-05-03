@@ -1,5 +1,11 @@
 <p id="notice"><%= notice %></p>
 
+<%= render 'form', deal: @deal %>
+
+<% if @deal.stylist_agree == true && @deal.scrub_agree == true && current_user.id == @deal.buyer %>
+  <%= link_to 'PAY HERE' %>
+<% end %>
+
 <p>
   <strong>Stylist agree?:</strong>
   <%= @deal.stylist_agree %>
@@ -30,5 +36,9 @@
   <%= @deal.offer_id %>
 </p>
 
+
+
 <%= link_to 'Edit', edit_deal_path(@deal) %> |
 <%= link_to 'Back', deals_path %>
+
+

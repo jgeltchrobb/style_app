@@ -11,48 +11,15 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :price %>
-    <%= form.text_field :price %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :time %>
-    <%= form.text_field :time %>
-  </div>
+  <% if !deal.stylist_agree %>
+    <h3>Waiting for <%= deal.profile.username %> to accept</h3>
+  <% end %>
 
-  <div class="field">
-    <%= form.label :stylist_agree %>
-    <%= form.check_box :stylist_agree, {}, "true", "false" %>
-  </div>
+  <% if current_user.id == deal.profile.user.id && !deal.stylist_agree %>
+    <%= button_to 'Agree to deal', { action: "update" }, method: :patch, params: {:deal => {:stylist_agree => "true"}} %>
+  <% end %> 
 
-  <div class="field">
-    <%= form.label :scrub_agree %>
-    <%= form.check_box :scrub_agree, {}, "true", "false" %>
-  </div>
-
-  <div class="field">
-    <%= form.label :paid %>
-    <%= form.check_box :paid, {}, "true", "false" %>
-
-  </div>
-
-  <div class="field">
-    <%= form.label :profile_id %>
-    <%= form.text_field :profile_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :offer_id %>
-    <%= form.text_field :offer_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <% if current_user.id == deal.buyer && deal.stylist_agree == true && !deal.scrub_agree %>
+    <%= button_to 'Agree to deal', { action: "update" }, method: :patch, params: {:deal => {:scrub_agree => "true"}} %>
+  <% end %>
 <% end %>

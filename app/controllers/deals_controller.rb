@@ -10,6 +10,14 @@ class DealsController < ApplicationController
   # GET /deals/1
   # GET /deals/1.json
   def show
+    # render plain: @deal.inspect
+  end
+
+  def request_deal
+    @offer = Offer.find(params[:deal][:offer_id])
+    @deal.buyer = current_user.id
+    # Sends email to stylist
+    DealNotifierMailer.send_deal_email(@offer, @deal.buyer).deliver
   end
 
   # GET /deals/new
@@ -27,6 +35,7 @@ class DealsController < ApplicationController
   # POST /deals.json
   def create
     @deal = Deal.new(deal_params)
+    request_deal
 
     respond_to do |format|
       if @deal.save
@@ -42,6 +51,12 @@ class DealsController < ApplicationController
   # PATCH/PUT /deals/1
   # PATCH/PUT /deals/1.json
   def update
+    @buyer = User.all.find_by(:id => @deal.buyer)
+    if @deal.stylist_agree == "true"
+      # Sends email to buyer
+      AcceptedNotifierMailer.send_accepted_email(@deal, @buyer).deliver
+    end
+      
     respond_to do |format|
       if @deal.update(deal_params)
         format.html { redirect_to @deal, notice: 'Deal was successfully updated.' }
@@ -71,6 +86,6 @@ class DealsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def deal_params
-      params.require(:deal).permit(:stylist_agree, :scrub_agree, :paid, :profile_id, :user_id, :offer_id)
+      params.require(:deal).permit(:stylist_agree, :scrub_agree, :paid, :profile_id, :user_id, :offer_id, :buyer)
     end
 end

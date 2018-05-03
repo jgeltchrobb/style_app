@@ -16,9 +16,9 @@
     <% end %>
     <%= link_to 'Stylists', stylists_path %>
     <%= link_to 'Scrubs', scrubs_path %>
+    <%= link_to('Logout', destroy_user_session_path,method: :delete) %>    
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
-    <%= link_to('Logout', destroy_user_session_path,method: :delete) %>
   </body>
 </html>
