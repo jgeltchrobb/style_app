@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :profiles
   devise_for :users
   resources :posts
+  resources :charges
   get 'stylists' => 'profiles#stylists'
   get 'scrubs' => 'profiles#scrubs'
   get 'request/:id', to: 'deals#request_deal', as: 'request_deals'

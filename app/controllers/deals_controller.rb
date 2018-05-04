@@ -4,7 +4,12 @@ class DealsController < ApplicationController
   # GET /deals
   # GET /deals.json
   def index
-    @deals = Deal.all
+    if current_user.has_role?(:stylist)
+      @deals = Deal.all.where(:profile.id => current_user.id)
+    elsif current_user.has_role?(:scrub)
+      @deals = Deal.all.where(:buyer => current_user.id)
+    end
+    
   end
 
   # GET /deals/1
@@ -13,11 +18,11 @@ class DealsController < ApplicationController
     # render plain: @deal.inspect
   end
 
-  def request_deal
-    @offer = Offer.find(params[:deal][:offer_id])
+  def request_deal(deal)
     @deal.buyer = current_user.id
+    @deal = deal
     # Sends email to stylist
-    DealNotifierMailer.send_deal_email(@offer, @deal.buyer).deliver
+    DealNotifierMailer.send_deal_email(@deal, @deal.buyer).deliver
   end
 
   # GET /deals/new
@@ -35,8 +40,8 @@ class DealsController < ApplicationController
   # POST /deals.json
   def create
     @deal = Deal.new(deal_params)
-    request_deal
-
+    request_deal(@deal)
+    
     respond_to do |format|
       if @deal.save
         format.html { redirect_to @deal, notice: 'Deal was successfully created.' }
@@ -86,6 +91,6 @@ class DealsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def deal_params
-      params.require(:deal).permit(:stylist_agree, :scrub_agree, :paid, :profile_id, :user_id, :offer_id, :buyer)
+      params.require(:deal).permit(:id, :stylist_agree, :scrub_agree, :paid, :profile_id, :user_id, :offer_id, :buyer)
     end
 end

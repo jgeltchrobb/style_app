@@ -9,6 +9,6 @@
 <body>
   <h2>Hi, <%= @deal.profile.username %> </h2>
   <h1><%= @user.profile.username %> has requested a deal</h1>
-  <p>View the <%= link_to 'DEAL', deal_url(@deal) %></p>
+  <p>View the <%= link_to 'DEAL', deal_url(@deal.id) %></p>
 </body>
 </html>

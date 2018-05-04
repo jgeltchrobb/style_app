@@ -2,23 +2,48 @@
 
 <%= render 'form', deal: @deal %>
 
-<% if @deal.stylist_agree == true && @deal.scrub_agree == true && current_user.id == @deal.buyer %>
-  <%= link_to 'PAY HERE' %>
+
+<% unless @deal.paid %>
+  <% if @deal.stylist_agree == true && @deal.scrub_agree == true && current_user.id == @deal.buyer %>
+
+  <%= form_tag charges_path do %>
+    <article>
+      <% if flash[:error].present? %>
+        <div id="error_explanation">
+          <p><%= flash[:error] %></p>
+        </div>
+      <% end %>
+      <label class="amount">
+        <span>Amount: $<%= @deal.offer.price %></span>
+      </label>
+    </article>
+
+    <%= hidden_field_tag :deal_id, @deal.id %>
+  
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-description="<%= @deal.profile.username %>'s Offer'"
+            data-amount="<%= @deal.offer.price * 100 %>"
+            data-locale="auto"></script>
+    <% end %>
+  <% end %>
 <% end %>
 
 <p>
-  <strong>Stylist agree?:</strong>
+  <strong>Stylist agreed to offer:</strong>
   <%= @deal.stylist_agree %>
 </p>
 
 <p>
-  <strong>Scrub agree?:</strong>
+  <strong>Scrub agreed to offer:</strong>
   <%= @deal.scrub_agree %>
 </p>
 
 <p>
-  <strong>Paid?:</strong>
-  <%= @deal.paid %>
+  <strong>Offer paid:</strong>
+  <% if @deal.paid %>
+    <p>Yes</p>
+  <% end %>
 </p>
 
 <p>
