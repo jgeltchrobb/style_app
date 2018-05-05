@@ -81,11 +81,11 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:content, :image, :owner_role, :search)
+      params.require(:post).permit(:title, :content, :image, :owner_role)
     end
 
     def filter_params
-      params.slice(:owner_role)
+      params.slice(:title, :content, :owner_role)
     end
 
     def finish_profile

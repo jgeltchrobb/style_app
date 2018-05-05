@@ -4,6 +4,14 @@
   <div class="panel-body">
     <form class="form-inline">
       <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" name="title"  class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="content">Content:</label>
+        <input type="text" name="content"  class="form-control">
+      </div>
+      <div class="form-group">
         <label for="owner_role">Owner Role:</label>
         <input type="text" name="owner_role"  class="form-control">
       </div>
@@ -16,6 +24,7 @@
 <table>
   <thead>
     <tr>
+      <th>Title</th>
       <th>Content</th>
       <th>Image</th>
       <th>Owner role</th>
@@ -26,7 +35,8 @@
   <tbody>
     <% @posts.each do |post| %>
       <tr>
-        <td><%= post.content %></td>
+        <td><%= post.title %></td>
+        <td><%= post.content %></td>        
         <td><%= image_tag post.image_url(:post) %></td>
         <td><%= post.owner_role %></td>
         <td><%= link_to 'Show', post %></td>

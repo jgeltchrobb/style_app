@@ -9,6 +9,12 @@ class Profile < ApplicationRecord
 
   after_create :add_location
 
+  scope(:username, -> (username) { where("LOWER(username) like ?", "%#{username.downcase}%")})
+  scope(:bio, -> (bio) { where("LOWER(bio) like ?", "%#{bio.downcase}%")})
+  scope(:rating, -> (rating) { where(rating: rating)}) 
+
+  # scope(:suburb, -> (suburb) { includes(:location).where("suburb LIKE ?", "#{suburb}%") })
+
   def add_location
     location = Location.create(profile_id: self.id)
   end

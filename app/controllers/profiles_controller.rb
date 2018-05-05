@@ -17,6 +17,9 @@ class ProfilesController < ApplicationController
   def stylists
     @users = User.with_role(:stylist)
     @profiles = Profile.all
+    # filter_params.each do |key,value|
+    #   @profiles = @profiles.public_send(key, value) if value.present?
+    # end
   end
 
   def scrubs
@@ -93,6 +96,10 @@ class ProfilesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
       params.require(:profile).permit(:username, :bio, :profile_pic, :rating, :user_id, :user_role, :has_offers, location_attributes: [:suburb, :postcode, :state, :country])
+    end
+
+    def filter_params
+      params.slice(:username, :bio, :rating, :suburb, :state, :postcode, :country)
     end
 
     def is_admin

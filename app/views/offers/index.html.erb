@@ -17,7 +17,8 @@
 <table>
   <thead>
     <tr>
-      <th>Price</th>
+      <th>Title</th>
+      <th>Price</th>      
       <th>Time</th>
       <th>In person</th>
       <th>User</th>
@@ -28,7 +29,8 @@
   <tbody>
     <% @offers.each do |offer| %>
       <tr>
-        <td><%= offer.price %></td>
+        <td><%= offer.title %></td>
+        <td><%= offer.price %></td>        
         <td><%= offer.time %></td>
         <td><%= offer.in_person %></td>
         <td><%= offer.user.email %></td>
