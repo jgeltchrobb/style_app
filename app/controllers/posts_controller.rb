@@ -90,7 +90,7 @@ class PostsController < ApplicationController
 
     def finish_profile
       flash[:notice] = "You need to complete your profile before you can post"
-      redirect_to profile_path(current_user.profile.id)
+      redirect_to edit_profile_path(current_user.profile.id)
     end
 
     def not_authorised
