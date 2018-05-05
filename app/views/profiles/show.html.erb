@@ -45,3 +45,13 @@
   <%= link_to 'Edit', edit_profile_path(@profile) %> |
 <% end %>
 <%= link_to 'Back', profiles_path %>
+
+<h2><%= @profile.username %>'s Posts</h2>
+
+<% @profile.user.posts.each do |post| %>
+  <p>Post <%= post.id %></p>
+  <%= image_tag post.image_url(:post) %>
+  <%= post.content %> <br>
+  <%= link_to 'Show', post_path(post) %>
+  <hr>
+<% end %>

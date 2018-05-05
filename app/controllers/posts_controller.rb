@@ -60,7 +60,7 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
-    not_authorised and return unless current_user.can_destroy?(@post)
+    not_authorised and return unless current_user.can_delete?(@post)
 
     @post.destroy
     respond_to do |format|
