@@ -4,7 +4,7 @@
     <title>StyleApp</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <%= stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css' %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -17,7 +17,11 @@
     <%= link_to 'Stylists', stylists_path %>
     <%= link_to 'Scrubs', scrubs_path %>
     <%= link_to('Logout', destroy_user_session_path,method: :delete) %>  
-    <p>Currently signed in as: <%= current_user.email %></p>
+    <br><br>
+    <% if user_signed_in? %>
+      <p>Currently signed in as: <%= current_user.email %></p>
+    <% end %>
+
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>

@@ -39,7 +39,9 @@ class DealsController < ApplicationController
   # POST /deals
   # POST /deals.json
   def create
+    
     @deal = Deal.new(deal_params)
+    finish_profile and return unless current_user.completed_profile?   
     request_deal(@deal)
     
     respond_to do |format|
@@ -92,5 +94,10 @@ class DealsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def deal_params
       params.require(:deal).permit(:id, :stylist_agree, :scrub_agree, :paid, :profile_id, :user_id, :offer_id, :buyer)
+    end
+
+    def finish_profile
+      flash[:notice] = "You need to complete your profile before you can request a deal"
+      redirect_to profile_path(@deal.user.id)
     end
 end

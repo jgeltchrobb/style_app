@@ -5,6 +5,9 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @posts = Post.all
+    filter_params.each do |key,value|
+      @posts = @posts.public_send(key, value) if value.present?
+    end
   end
 
   # GET /posts/1
@@ -15,6 +18,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     not_authorised and return unless current_user.can_create?(@post)
+    finish_profile and return unless current_user.completed_profile?
     @post = Post.new
   end
 
@@ -77,7 +81,16 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:content, :image, :owner_role)
+      params.require(:post).permit(:content, :image, :owner_role, :search)
+    end
+
+    def filter_params
+      params.slice(:owner_role)
+    end
+
+    def finish_profile
+      flash[:notice] = "You need to complete your profile before you can post"
+      redirect_to profile_path(current_user.profile.id)
     end
 
     def not_authorised

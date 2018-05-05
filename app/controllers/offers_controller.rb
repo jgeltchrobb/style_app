@@ -6,6 +6,9 @@ class OffersController < ApplicationController
   def index
     # @offers = Offer.all
     @offers = Offer.all.where(:profile_id => params[:offer][:profile_id])
+    # filter_params.each do |key,value|
+    #   @offers = @offers.public_send(key, value) if value.present?
+    # end
   end
 
   # GET /offers/1
@@ -70,6 +73,10 @@ class OffersController < ApplicationController
     def set_offer
       @offer = Offer.find(params[:id])
     end
+
+    # def filter_params
+    #   params.slice(:price)
+    # end
 
     # def check_owner
     #   if @offer.profile_id == @profile.user.id

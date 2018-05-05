@@ -34,4 +34,8 @@ class User < ApplicationRecord
   def can_delete?(post)
     self.has_role?(:admin) || self.has_role?(:moderator) || (self.has_role?(:author) && post.user_id == self.id)
   end
+
+  def completed_profile?
+    self.profile.username.present? && self.profile.bio.present? && self.profile.profile_pic.present? && self.profile.user_role.present?
+  end
 end
