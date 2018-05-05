@@ -30,8 +30,10 @@
 </table>
 
 <br>
-
-<%= link_to 'New Offer', new_offer_path %>
+<% if @offers.first.profile.user.id == current_user.id %>
+  <%= link_to 'Create Offer', new_offer_path(params: {:offer => {:user_id => @offers.first.profile.user_id, :profile_id => @offers.first.profile.id}}) %>
+<% end %>
+<%= link_to 'Back', profile_path(@offers.first.profile.id) %>
 
 <%# new_deal_path(params: {:deal => {:price => offer.price, :time => offer.time, :in_person => offer.in_person, :offer_id => offer.id, :user_id => current_user.id, :profile_id => offer.profile_id}}) %>
 

@@ -4,6 +4,7 @@ class OffersController < ApplicationController
   # GET /offers
   # GET /offers.json
   def index
+    # @offers = Offer.all
     @offers = Offer.all.where(:profile_id => params[:offer][:profile_id])
   end
 

@@ -85,6 +85,10 @@ class ProfilesController < ApplicationController
       params.require(:profile).permit(:username, :bio, :profile_pic, :rating, :user_id, :user_role, :has_offers)
     end
 
+    def is_admin
+      current_user.has_role?(:admin)
+    end
+
     def assign_user_role
       if @profile.user_role == "stylist"
         current_user.remove_role(:scrub)

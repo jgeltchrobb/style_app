@@ -12,7 +12,7 @@
   <body>
     <%= link_to 'Home', posts_path %>
     <% if user_signed_in? %>
-      <%= link_to 'Your Profile', profile_path(current_user.profile_id) %>
+      <%= link_to 'Your Profile', profile_path(current_user.profile.id) %>
     <% end %>
     <%= link_to 'Stylists', stylists_path %>
     <%= link_to 'Scrubs', scrubs_path %>

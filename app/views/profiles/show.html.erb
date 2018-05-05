@@ -34,9 +34,11 @@
 </p>
 -->
 <% if @profile.user.has_role?(:stylist) %>
-  <%= link_to 'Show Offers', offers_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %>
+  <% if @profile.has_offers == true %>
+    <%= link_to 'Show Offers', offers_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %>
+  <% end %>
   <% if @profile.user_id == current_user.id%>
-    <%= link_to 'Create Offers', new_offer_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %>
+    <%= link_to 'Create Offer', new_offer_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %>
   <% end %>
 <% end %>
 <% if @profile.user_id == current_user.id %>
