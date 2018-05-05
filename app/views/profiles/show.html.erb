@@ -20,19 +20,16 @@
   <%= @profile.rating %>
 </p>
 
-<!--
-<p>
-  <strong>Offers:</strong>
-  <% @offer.each do |offer| %>
-    <p>Price: <%= offer.price %></p>
-    <p>Time: <%= offer.time %> minutes</p>
-    <p>In person:<%= offer.in_person? %></p>
-    <%= link_to "Buy", new_deal_path(params: {:deal => {:offer_id => offer.id, :user_id => current_user.id, :profile_id => params[:id]}}) %>
-    <%= link_to 'Delete', offer, method: :delete, data: { confirm: 'Are you sure?' } if offer.user_id == current_user.id %>
-    <hr>
-  <% end %>
-</p>
--->
+<% if @profile.location.suburb.present? && @profile.location.state.present? %>
+  <iframe
+    width="600"
+    height="450"
+    frameborder="0" style="border:0"
+    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkSRowtnJmqvtEC9Lq7H7YRKKKfKE7yMQ
+      &zoom=10&q=<%= @profile.location.full_address %>" allowfullscreen>
+  </iframe>
+<% end %>
+
 <% if @profile.user.has_role?(:stylist) %>
   <% if @profile.has_offers == true %>
     <%= link_to 'Show Offers', offers_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %>

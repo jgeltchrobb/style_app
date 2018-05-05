@@ -108,4 +108,5 @@ class ProfilesController < ApplicationController
         current_user.add_role(:scrub)
       end
     end
+
 end
