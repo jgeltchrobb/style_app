@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_05_041750) do
+ActiveRecord::Schema.define(version: 2018_05_05_063645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,17 @@ ActiveRecord::Schema.define(version: 2018_05_05_041750) do
     t.index ["offer_id"], name: "index_deals_on_offer_id"
     t.index ["profile_id"], name: "index_deals_on_profile_id"
     t.index ["user_id"], name: "index_deals_on_user_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "suburb"
+    t.integer "postcode"
+    t.string "state"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "profile_id"
+    t.index ["profile_id"], name: "index_locations_on_profile_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -82,6 +93,8 @@ ActiveRecord::Schema.define(version: 2018_05_05_041750) do
     t.datetime "updated_at", null: false
     t.string "user_role"
     t.boolean "has_offers"
+    t.bigint "location_id"
+    t.index ["location_id"], name: "index_profiles_on_location_id"
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
@@ -125,11 +138,13 @@ ActiveRecord::Schema.define(version: 2018_05_05_041750) do
   add_foreign_key "deals", "offers"
   add_foreign_key "deals", "profiles"
   add_foreign_key "deals", "users"
+  add_foreign_key "locations", "profiles"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"
   add_foreign_key "offers", "profiles"
   add_foreign_key "offers", "users"
   add_foreign_key "posts", "users"
+  add_foreign_key "profiles", "locations"
   add_foreign_key "profiles", "users"
   add_foreign_key "users", "profiles"
 end

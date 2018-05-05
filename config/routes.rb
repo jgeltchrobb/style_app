@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
   resources :offers
   resources :deals
-  resources :profiles
+  resources :profiles do
+    resources :locations
+  end
   devise_for :users
   resources :posts
   resources :charges
+  # resources :locations
   get 'stylists' => 'profiles#stylists'
   get 'scrubs' => 'profiles#scrubs'
   get 'request/:id', to: 'deals#request_deal', as: 'request_deals'

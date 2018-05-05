@@ -4,11 +4,12 @@
 <% @users.each do |user| %>
   <% @profiles.each do |profile| %>
     <% if profile.user_id == user.id %>
-      <%= image_tag profile.profile_pic_url(:thumb) %>
+      <%= image_tag profile.profile_pic_url(:medium) %>
     <% end %> 
   <% end %>
   
   <%= user.email %>
+  <%= user.profile.username %>
   <%= link_to 'Profile', profile_path(user.profile.id) %><br />
   <br>
 <% end %>
