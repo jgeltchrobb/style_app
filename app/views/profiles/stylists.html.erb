@@ -20,7 +20,7 @@
         <input type="text" name="suburb"  class="form-control">
       </div>
       <div class="form-group">
-        <label for="state">state:</label>
+        <label for="state">State:</label>
         <input type="text" name="state"  class="form-control">
       </div>
       <div class="form-group">
@@ -36,16 +36,21 @@
   </div>
 </div>
 
-<% @users.each do |user| %>
-  <% @profiles.each do |profile| %>
-    <% if profile.user_id == user.id %>
+<% @profiles.each do |profile| %>
+    <% if profile.user.has_role?(:stylist) %>
       <%= image_tag profile.profile_pic_url(:medium) %>
-    <% end %> 
-  <% end %>
-  
-  <%= user.email %>
-  <%= user.profile.username %>
-  <%= link_to 'Profile', profile_path(user.profile.id) %><br />
-  <br>
+      <%= profile.user.email %>
+      <%= profile.username %>
+      <% if profile.location.latitude.present? %>
+        <% stylist_loc = [profile.location.latitude,profile.location.longitude] %>
+        <%= "#{Geocoder::Calculations.distance_between(@user_loc, stylist_loc, :units => :km).to_i} km away" %>
+      <% else %>
+        <strong><%= "User has no location info" %></strong>
+      <% end %>
+      <%= link_to 'Profile', profile_path(profile.id) %><br />
+      <br>
+    <% end %>
 <% end %>
+
+
 

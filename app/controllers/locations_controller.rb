@@ -41,6 +41,9 @@ class LocationsController < ApplicationController
     # PATCH/PUT /locations/1
     # PATCH/PUT /locations/1.json
     def update
+      if @location.suburb.present? && @location.state.present?
+        assign_coords(@location)
+      end
       respond_to do |format|
         if @location.update(location_params)
           format.html { redirect_to @location, notice: 'location was successfully updated.' }
@@ -65,7 +68,6 @@ class LocationsController < ApplicationController
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_location
-        # @location = Location.where(:user_id => current_user.id).first
         @location = Location.find(params[:id])
       end
   
@@ -73,4 +75,11 @@ class LocationsController < ApplicationController
       def location_params
         params.require(:location).permit(:suburb, :postcode, :state, :country)
       end
+
+      def assign_coords(location)
+        coords = Geocoder.coordinates("#{location.suburb}, #{location.state}")
+        location.latitude = coords[0]
+        location.longitude = coords[1]
+      end
+
  end

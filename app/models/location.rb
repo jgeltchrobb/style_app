@@ -6,4 +6,5 @@ class Location < ApplicationRecord
   def full_address
     return "#{self.suburb}, #{state}, #{country}, #{postcode}"
   end
+
 end

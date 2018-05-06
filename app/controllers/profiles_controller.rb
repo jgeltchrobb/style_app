@@ -15,16 +15,19 @@ class ProfilesController < ApplicationController
   end
 
   def stylists
-    @users = User.with_role(:stylist)
     @profiles = Profile.all
-    # filter_params.each do |key,value|
-    #   @profiles = @profiles.public_send(key, value) if value.present?
-    # end
+    @user_loc = [current_user.profile.location.latitude,current_user.profile.location.longitude]
+    filter_params.each do |key,value|
+      @profiles = @profiles.public_send(key, value) if value.present?
+    end
   end
 
   def scrubs
-    @users = User.with_role(:scrub) 
     @profiles = Profile.all
+    @user_loc = [current_user.profile.location.latitude,current_user.profile.location.longitude]    
+    filter_params.each do |key,value|
+      @profiles = @profiles.public_send(key, value) if value.present?
+    end
   end
 
   # GET /profiles/new
@@ -99,7 +102,7 @@ class ProfilesController < ApplicationController
     end
 
     def filter_params
-      params.slice(:username, :bio, :rating, :suburb, :state, :postcode, :country)
+      params.slice(:username, :bio, :suburb, :postcode, :state, :country)
     end
 
     def is_admin
