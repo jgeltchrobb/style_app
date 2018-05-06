@@ -2,6 +2,7 @@ class ChargesController < ApplicationController
   before_action :set_deal
 
   def new
+    
     redirect_to deal_path(@deal)
   end
   
@@ -19,6 +20,9 @@ class ChargesController < ApplicationController
       :currency    => 'aud'
     )
   
+    DealReceiptMailer.send_receipt_email(@deal).deliver
+    DealReceiptMailer.notify_stylist_of_payment(@deal).deliver
+    
   rescue Stripe::CardError => e
     flash[:error] = e.message
     redirect_to deal_path(@deal)
