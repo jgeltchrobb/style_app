@@ -21,9 +21,9 @@
     <% @deals.each do |deal| %>
       <tr>
         <td><%= deal.offer.price %></td>
-        <td><%= deal.stylist_agree? %></td>
-        <td><%= deal.scrub_agree? %></td>
-        <td><%= deal.paid? %></td>
+        <td><%= deal.stylist_agree %></td>
+        <td><%= deal.scrub_agree %></td>
+        <td><%= deal.paid %></td>
         <td><%= deal.profile.username %></td>
         <td><%= deal.user.profile.username %></td>
         <td><%= deal.offer.user.email %></td>
