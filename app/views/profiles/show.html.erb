@@ -57,7 +57,6 @@
 <% if @profile.user_id == current_user.id %>
   <%= link_to 'Edit', edit_profile_path(@profile) %> |
 <% end %>
-<%= link_to 'Back', profiles_path %> <br>
 
 <% if @profile.location.suburb.present? && @profile.location.state.present? %>
   <iframe

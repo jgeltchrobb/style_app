@@ -44,6 +44,8 @@
       <% if profile.location.latitude.present? %>
         <% stylist_loc = [profile.location.latitude,profile.location.longitude] %>
         <%= "#{Geocoder::Calculations.distance_between(@user_loc, stylist_loc, :units => :km)} km away" %>
+      <% else %>
+        <strong><%= "User has no location info" %></strong>
       <% end %>
       <%= link_to 'Profile', profile_path(profile.id) %><br />
       <br>
