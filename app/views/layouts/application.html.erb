@@ -15,7 +15,9 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <%= link_to "Posts", posts_path, class: "nav-item nav-link active" %>
-            <%= link_to "Deals", deals_path, class: "nav-item nav-link active" %>            
+            <% if Deal.all.find_by(buyer: current_user.id).present? %>
+              <%= link_to "Deals", deals_path, class: "nav-item nav-link active" %>
+              <% end %>            
             <%= link_to "Stylists", stylists_path, class: "nav-item nav-link active" %>   
             <%= link_to "Scrubs", scrubs_path, class: "nav-item nav-link active" %>   
             <%= link_to "Your Profile", profile_path(current_user.profile.id), class: "nav-item nav-link active" %>
