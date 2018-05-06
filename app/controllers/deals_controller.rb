@@ -5,7 +5,7 @@ class DealsController < ApplicationController
   # GET /deals.json
   def index
     if current_user.has_role?(:stylist)
-      @deals = Deal.all.where(:profile.id => current_user.id)
+      @deals = Deal.all.where(profile_id: current_user.id)
     elsif current_user.has_role?(:scrub)
       @deals = Deal.all.where(:buyer => current_user.id)
     end
@@ -34,6 +34,7 @@ class DealsController < ApplicationController
 
   # GET /deals/1/edit
   def edit
+    not_authorised and return unless current_user.has_role?(:admin)
   end
 
   # POST /deals
@@ -78,6 +79,8 @@ class DealsController < ApplicationController
   # DELETE /deals/1
   # DELETE /deals/1.json
   def destroy
+    not_authorised and return unless current_user.has_role?(:admin)
+
     @deal.destroy
     respond_to do |format|
       format.html { redirect_to deals_url, notice: 'Deal was successfully destroyed.' }
@@ -100,4 +103,10 @@ class DealsController < ApplicationController
       flash[:notice] = "You need to complete your profile before you can request a deal"
       redirect_to profile_path(@deal.user.id)
     end
+
+    def not_authorised
+      flash[:notice] = "You are not authorised!"
+      redirect_to deals_path
+    end
+
 end

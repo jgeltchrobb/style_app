@@ -12,6 +12,7 @@
       <th>Stylist</th>
       <th>Scrub</th>
       <th>Offerers account</th>
+      <th>Created</th>      
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -26,9 +27,12 @@
         <td><%= deal.profile.username %></td>
         <td><%= deal.user.profile.username %></td>
         <td><%= deal.offer.user.email %></td>
+        <td><%= deal.created_at %></td>        
         <td><%= link_to 'Show', deal %></td>
-        <td><%= link_to 'Edit', edit_deal_path(deal) %></td>
-        <td><%= link_to 'Destroy', deal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if current_user.has_role?(:admin) %>
+          <td><%= link_to 'Edit', edit_deal_path(deal) %></td>
+          <td><%= link_to 'Destroy', deal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

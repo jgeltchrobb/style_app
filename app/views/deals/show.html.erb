@@ -31,37 +31,55 @@
 
 <p>
   <strong>Stylist agreed to offer:</strong>
-  <%= @deal.stylist_agree %>
+  <% if @deal.stylist_agree %>
+    Yes
+  <% else %>
+    No
+  <% end %>
 </p>
 
 <p>
   <strong>Scrub agreed to offer:</strong>
-  <%= @deal.scrub_agree %>
+  <% if @deal.scrub_agree %>
+    Yes
+  <% else %>
+    No
+  <% end %>
 </p>
 
 <p>
   <strong>Offer paid:</strong>
   <% if @deal.paid %>
-    <p>Yes</p>
+    Yes
+  <% else %>
+    No
   <% end %>
 </p>
 
 <p>
-  <strong>Profile:</strong>
-  <%= @deal.profile_id %>
+  <strong>Stylist:</strong>
+  <%= @deal.profile.username %>
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @deal.user_id %>
+  <strong>Scrub:</strong>
+  <%= @deal.user.profile.username %>
 </p>
 
 <p>
-  <strong>Offer:</strong>
-  <%= @deal.offer_id %>
+  <strong>Price:</strong>
+  $<%= @deal.offer.price %>
 </p>
 
+<p>
+  <strong>Session length:</strong>
+  <%= @deal.offer.time %> hour
+</p>
 
+<p>
+  <strong>In person:</strong>
+  <%= @deal.offer.in_person %>
+</p>
 
 <%= link_to 'Edit', edit_deal_path(@deal) %> |
 <%= link_to 'Back', deals_path %>
