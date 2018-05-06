@@ -13,21 +13,21 @@
 #
 # Configure Using Gemfile
 # gem 'pg'
-#
-default: &default
-  adapter: postgresql
-  encoding: unicode
-  # For details on connection pooling, see Rails configuration guide
-  # http://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+# #
+# default: &default
+#   adapter: postgresql
+#   encoding: unicode
+#   # For details on connection pooling, see Rails configuration guide
+#   # http://guides.rubyonrails.org/configuring.html#database-pooling
+#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-development:
-  <<: *default
-  database: style_app_development
-  username: postgres
-  password: <%= ENV['STYLE_APP_DATABASE_PASSWORD'] %>
-  host: localhost
-  port: 5433
+# development:
+#   <<: *default
+#   database: style_app_development
+#   username: postgres
+#   password: <%= ENV['STYLE_APP_DATABASE_PASSWORD'] %>
+#   host: localhost
+#   port: 5433
 
 
   # The specified database role being used to connect to postgres.
@@ -84,8 +84,9 @@ development:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 
-production:
-  <<: *default
-  database: style_app_production
-  username: style_app
-  password: <%= ENV['STYLE_APP_DATABASE_PASSWORD'] %>
+# production:
+#   <<: *default
+#   database: style_app_production
+#   username: d9r0umvbnj5diq
+#   password: <%= ENV['STYLE_APP_DATABASE_PASSWORD'] %>
+#   host: "ec2-23-23-142-5.compute-1.amazonaws.com"
