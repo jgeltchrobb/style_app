@@ -11,8 +11,10 @@
     </div>
   <% end %>
 
-  <% if !deal.stylist_agree %>
+  <% if !deal.stylist_agree && current_user.has_role?(:scrub)%>
     <h3>Waiting for <%= deal.profile.username %> to accept</h3>
+  <% elsif !deal.stylist_agree && current_user.has_role?(:stylist) %>
+    <h3>Waiting for YOU to accept!</h3>
   <% end %>
 
   <% if current_user.id == deal.profile.user.id && !deal.stylist_agree %>

@@ -33,19 +33,17 @@ class ProfilesController < ApplicationController
   # GET /profiles/new
   def new
     @profile = Profile.new
-    @profile.locations.build
   end
 
   # GET /profiles/1/edit
   def edit
-    @location = Location.find_by(current_user.profile.location_id)
+    @location = Location.find(current_user.profile.location.id)
   end
 
   # POST /profiles
   # POST /profiles.json
   def create
     @profile = Profile.new(profile_params)
-    @profile.build_location
 
     respond_to do |format|
       if @profile.save
@@ -61,13 +59,6 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1
   # PATCH/PUT /profiles/1.json
   def update
-
-    # @location = Location.new
-    # @profile.location_id = @location.id
-    # @profile.location.suburb = params[:suburb]
-    # @profile.location.save
-    # @profile.location.suburb = params[:suburb]
-
     respond_to do |format|
       if @profile.update(profile_params)
         assign_user_role
@@ -98,7 +89,7 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:username, :bio, :profile_pic, :rating, :user_id, :user_role, :has_offers, location_attributes: [:suburb, :postcode, :state, :country])
+      params.require(:profile).permit(:username, :bio, :profile_pic, :rating, :user_id, :user_role, :has_offers, location_attributes: [:suburb, :postcode, :state, :country, :profile_id])
     end
 
     def filter_params

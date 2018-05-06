@@ -39,7 +39,7 @@
       <%= profile.username %>
       <% if profile.location.latitude.present? %>
         <% scrub_loc = [profile.location.latitude,profile.location.longitude] %>
-        <%= "#{Geocoder::Calculations.distance_between(@user_loc, scrub_loc, :units => :km).to_i} km away" %>
+        <%= "#{Geocoder::Calculations.distance_between(@user_loc, scrub_loc, :units => :km)} km away" %>
       <% else %>
         <strong><%= "User has no location info" %></strong>
       <% end %>

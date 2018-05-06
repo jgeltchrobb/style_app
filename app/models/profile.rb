@@ -4,10 +4,9 @@ class Profile < ApplicationRecord
   
   has_many :deals
   has_many :offers
-  has_one :location
+  has_one :location, :dependent => :destroy
   accepts_nested_attributes_for :location
 
-  after_create :add_location
 
   scope(:username, -> (username) { where("LOWER(username) like ?", "%#{username.downcase}%")})
   scope(:bio, -> (bio) { where("LOWER(bio) like ?", "%#{bio.downcase}%")})
@@ -18,12 +17,4 @@ class Profile < ApplicationRecord
   scope(:state, -> (state) { joins(:location).where("LOWER(state) like ?", "%#{state.downcase}%")})
   scope(:country, -> (country) { joins(:location).where("LOWER(country) like ?", "%#{country.downcase}%")})
   
-
-
-  # scope(:suburb, -> (suburb) { includes(:location).where("suburb LIKE ?", "#{suburb}%") })
-
-  def add_location
-    location = Location.create(profile_id: self.id)
-  end
-
 end

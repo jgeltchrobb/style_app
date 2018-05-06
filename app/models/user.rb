@@ -18,7 +18,8 @@ class User < ApplicationRecord
   end
 
   def add_profile
-    Profile.create(user_id: self.id)
+    x = Profile.create(user_id: self.id)
+    Location.create(profile_id: x.id)
   end
 
   def can_create?(post)

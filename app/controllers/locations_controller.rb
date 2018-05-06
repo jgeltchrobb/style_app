@@ -25,8 +25,10 @@ class LocationsController < ApplicationController
     # POST /locations
     # POST /locations.json
     def create
-      @location = Location.new(location_params)
-  
+      # @location = Location.new(location_params)
+      if @location.suburb.present? && @location.state.present?
+        assign_coords(@location)
+      end
       respond_to do |format|
         if @location.save
           format.html { redirect_to @location, notice: 'location was successfully created.' }
@@ -73,7 +75,7 @@ class LocationsController < ApplicationController
   
       # Never trust parameters from the scary internet, only allow the white list through.
       def location_params
-        params.require(:location).permit(:suburb, :postcode, :state, :country)
+        params.require(:location).permit(:suburb, :postcode, :state, :country, :profile_id, :latitude, :longitude)
       end
 
       def assign_coords(location)

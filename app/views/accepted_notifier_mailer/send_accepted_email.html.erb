@@ -7,8 +7,7 @@
   <title>Document</title>
 </head>
 <body>
-  <% @customer = User.all.find_by(:id => @buyer) %>
-  <h1><%= @customer.profile.username %> has accepted the deal</h1>
+  <h1><%= @deal.profile.username %> has accepted the deal</h1>
   <p>View the <%= link_to 'DEAL', deal_url(@deal) %> and accept if you're happy!</p>
 </body>
 </html>
