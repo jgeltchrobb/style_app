@@ -37,7 +37,7 @@
       <%= image_tag profile.profile_pic_url(:medium) %>
       <%= profile.user.email %>
       <%= profile.username %>
-      <% if profile.location.latitude.present? %>
+      <% if profile.location.latitude.present? && current_user.profile.location.latitude.present? %>
         <% scrub_loc = [profile.location.latitude,profile.location.longitude] %>
         <%= "#{Geocoder::Calculations.distance_between(@user_loc, scrub_loc, :units => :km)} km away" %>
       <% else %>
