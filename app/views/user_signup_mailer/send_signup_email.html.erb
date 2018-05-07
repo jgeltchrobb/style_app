@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>New User Signup</title>
+</head>
+<body>
+  <h2>Hi, <%= @user.email %> </h2>
+  <h1>Welcome to Fashion Police, setup your <%= link_to 'Profile', edit_profile_url(@user.profile.id) %> to use the site.</h1>
+</body>
+</html>

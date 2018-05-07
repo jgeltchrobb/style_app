@@ -12,6 +12,7 @@ class User < ApplicationRecord
 
   after_create :set_role
   after_create :add_profile
+  after_create :signup_email
  
   def set_role
     add_role :author
@@ -20,6 +21,10 @@ class User < ApplicationRecord
   def add_profile
     x = Profile.create(user_id: self.id)
     Location.create(profile_id: x.id)
+  end
+
+  def signup_email
+    UserSignupMailer.send_signup_email(self).deliver
   end
 
   def can_create?(post)
