@@ -30,6 +30,7 @@ class OffersController < ApplicationController
   def create
     @offer = Offer.new(offer_params)
     @offer.user_id = current_user.id
+    @offer.profile = current_user.profile
     @offer.profile.has_offers = true
     @offer.profile.save
     

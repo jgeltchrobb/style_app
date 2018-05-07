@@ -4,6 +4,7 @@ class ProfilesController < ApplicationController
   # GET /profiles
   # GET /profiles.json
   def index
+    not_authorised and return unless is_admin
     @profiles = Profile.all
   end
 
@@ -98,6 +99,11 @@ class ProfilesController < ApplicationController
 
     def is_admin
       current_user.has_role?(:admin)
+    end
+
+    def not_authorised
+      flash[:notice] = "You do not have admin privileges"
+      redirect_to profile_path(current_user.profile.id)
     end
 
     def assign_user_role

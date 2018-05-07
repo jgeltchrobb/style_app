@@ -14,21 +14,21 @@
 
 <h1><%= @offers.first.profile.username %>'s Offers</h1>
 
-<table>
+<table class="table table-striped table-dark">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Price</th>      
-      <th>Time</th>
-      <th>In person</th>
-      <th>User</th>
-      <th colspan="3"></th>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Price</th>
+      <th scope="col">In Person</th>
+      <th scope="col">Stylist</th>
     </tr>
   </thead>
 
   <tbody>
     <% @offers.each do |offer| %>
       <tr>
+        <th scope="row">1</td>
         <td><%= offer.title %></td>
         <td><%= offer.price %></td>        
         <td><%= offer.time %></td>

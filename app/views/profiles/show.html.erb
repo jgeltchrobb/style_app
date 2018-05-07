@@ -1,86 +1,116 @@
 <p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-12 col-md-6">
 
-<%= image_tag @profile.profile_pic_url(:medium) %>
+    <!-- Profile pic and info -->
+    <div class="row">
+      <div class="col-12 col-md-4">
+        <%= image_tag @profile.profile_pic_url(:medium) %>
+      </div>
+      <div class="col-12 col-md-8">
 
-<h2>
-  <%= @profile.username %>
-</h2>
+      <h2>
+        <%= @profile.username %>
+      </h2>
 
-<p>
-  <strong>Bio:</strong>
-  <%= @profile.bio %>
-</p>
+      <p>
+        <strong>Bio:</strong>
+        <%= @profile.bio %>
+      </p>
 
-<p>
-  <strong>Rating:</strong>
-  <%= @profile.rating %>
-</p>
+      <p>
+        <strong>Rating:</strong>
+        <%= @profile.rating %>
+      </p>
 
-<% if @profile.has_offers %>
-  <h3>Offers</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Offer no.</th>
-        <th>Title</th>
-        <th>Price</th>
-        <th>Time</th>
-        <th>In Person</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% count = 1 %>
-      <% @profile.offers.each do |offer| %>
-        <tr>
-          <td><%= count %></td>
-          <td><%= offer.title %></td>
-          <td><%= offer.price %></td>
-          <td><%= offer.time %></td>
-          <td><%= offer.in_person %></td>
-        </tr>
-        <% count += 1 %>
+      <% if @profile.user_id == current_user.id %>
+        <%= link_to 'Edit', edit_profile_path(@profile) %>
       <% end %>
-    </tbody>
-  </table>
-<% end %>
 
-<% if @profile.user.has_role?(:stylist) %>
-  <% if @profile.has_offers == true %>
-    <%= link_to 'Show Offers', offers_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %>
-  <% end %>
-  <% if @profile.user_id == current_user.id%>
-    <%= link_to 'Create Offer', new_offer_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %>
-  <% end %>
-<% end %>
-<% if @profile.user_id == current_user.id %>
-  <%= link_to 'Edit', edit_profile_path(@profile) %> |
-<% end %>
+      </div>
+    </div>
 
-<% if @profile.location.suburb.present? && @profile.location.state.present? %>
-  <iframe
-    width="600"
-    height="450"
-    frameborder="0" style="border:0"
-    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkSRowtnJmqvtEC9Lq7H7YRKKKfKE7yMQ
-      &zoom=10&q=<%= @profile.location.full_address %>" allowfullscreen>
-  </iframe>
-<% end %>
+    <!-- Map -->
+    <div>
+      <% if @profile.location.suburb.present? && @profile.location.state.present? %>
+        <iframe
+          width="600"
+          height="450"
+          frameborder="0" style="border:0"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkSRowtnJmqvtEC9Lq7H7YRKKKfKE7yMQ
+            &zoom=10&q=<%= @profile.location.full_address %>" allowfullscreen>
+        </iframe>
+      <% end %>
+    </div>
+</div>
+    <!--Offers -->
+  <div class="col-12 col-md-6">
+    
+<div class="row">
+    <div class="col-12 col-md-6">
+      <% if @profile.has_offers %>
+        <h3>Offers</h3>
+        <table class="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Price</th>
+              <th scope="col">Time</th>
+              <th scope="col">In Person</th>
+              <%# <th colspan="3"></th> %>
+            </tr>
+          </thead>
 
-<% if @profile.username.present? %>
-  <h2><%= @profile.username %>'s Posts</h2>
-<% end %>
+          <tbody>
+            <% count = 1 %>
+            <% @profile.offers.each do |offer| %>
+              <tr>
+                <td scope="row"><%= count %></td>
+                <td><%= offer.title %></td>
+                <td><%= offer.price %></td>
+                <td><%= offer.time %></td>
+                <td><%= offer.in_person %></td>
+              </tr>
+              <% count += 1 %>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
 
-<% if !@profile.user.posts.present? %>
-  <p>No posts yet...</p>
-  <h3>Create a <%= link_to 'Post', new_post_path(@profile.user.id) %></h3>
-<% end %>
+    <div class="col-12 col-md-4">
+      <% if @profile.user.has_role?(:stylist) %>
+        <% if @profile.has_offers == true %>
+          <p><%= link_to 'Show Offers', offers_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %></p>
+        <% end %>
+        <% if @profile.user_id == current_user.id%>
+          <%= link_to 'Create Offer', new_offer_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %>
+        <% end %>
+    <% end %>
+    </div>
+</div>
 
-<% @profile.user.posts.each do |post| %>
-  <p>Post <%= post.id %></p>
-  <%= link_to image_tag(post.image_url(:post)), post_path(post) %>
-  <%= post.content %> <br>
-  <%= link_to 'Show', post_path(post) %>
-  <hr>
-<% end %>
+    <!-- Posts -->
+    <div class="col-12 col-md-6">
+      <%= link_to 'New Post', new_post_path %>
+    
+      <% if @profile.username.present? %>
+        <h2><%= @profile.username %>'s Posts</h2>
+      <% end %>
+
+      <% if !@profile.user.posts.present? %>
+        <p>No posts yet...</p>
+        <h3>Create a <%= link_to 'Post', new_post_path(@profile.user.id) %></h3>
+      <% end %>
+
+      <% @profile.user.posts.each do |post| %>
+        <p><%= post.title %></p>
+        <%= link_to image_tag(post.image_url(:post)), post_path(post) %>
+        <%= post.content %> <br>
+        <%= link_to 'Show', post_path(post) %>
+        <hr>
+      <% end %>
+    </div>
+</div>
+</div>
