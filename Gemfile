@@ -79,3 +79,9 @@ gem "stripe", "~> 3.13"
 
 # Added at 2018-05-05 22:11:22 +1000 by jordan:
 gem "geocoder", "~> 1.4"
+
+# Added at 2018-05-08 10:24:30 +1000 by jordan:
+gem "bootstrap-sass", "~> 3.3"
+
+# Added at 2018-05-08 10:28:38 +1000 by jordan:
+gem "jquery-rails", "~> 4.3"

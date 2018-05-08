@@ -1,89 +1,116 @@
 <p id="notice"><%= notice %></p>
+<div class="col">
+  <div class="row">
+    <div class="col">
+      <div class="col-md">
+        <%= image_tag @profile.profile_pic_url(:profile) %>
 
-<%= image_tag @profile.profile_pic_url(:medium) %>
+        <h2>
+          <%= @profile.username %>
+        </h2>
 
-<h2>
-  <%= @profile.username %>
-</h2>
+        <p>
+          <strong>Rating:</strong>
+          <%= @profile.rating %>
+        </p>
 
-<p>
-  <strong>Bio:</strong>
-  <%= @profile.bio %>
-</p>
+        <% if @profile.user_id == current_user.id %>
+          <%= link_to 'Edit Profile', edit_profile_path(@profile) %>
+        <% end %>
+        <hr>
+      </div>
+      
+      <div class="col-md-12">
+        <p>
+          <strong>Bio:</strong>
+          <%= @profile.bio %>
+        </p>
+      </div>
+    </div>
 
-<p>
-  <strong>Rating:</strong>
-  <%= @profile.rating %>
-</p>
+    <div class="col-sm">
+      <% if @profile.has_offers %>
+        <h3>Offers</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Price</th>
+              <th scope="col">Time</th>
+              <th scope="col">In Person</th>
+              <th scope="col">See More</th>              
+            </tr>
+          </thead>
 
-<% if @profile.user_id == current_user.id %>
-  <%= link_to 'Edit Profile', edit_profile_path(@profile) %>
-<% end %>
-<hr>
-
-<% if @profile.has_offers %>
-  <h3>Offers</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Offer no.</th>
-        <th>Title</th>
-        <th>Price</th>
-        <th>Time</th>
-        <th>In Person</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% count = 1 %>
-      <% @profile.offers.each do |offer| %>
-        <tr>
-          <td><%= count %></td>
-          <td><%= offer.title %></td>
-          <td><%= offer.price %></td>
-          <td><%= offer.time %></td>
-          <td><%= offer.in_person %></td>
-        </tr>
-        <% count += 1 %>
+          <tbody>
+            <% count = 1 %>
+            <% @profile.offers.each do |offer| %>
+              <tr>
+                <th scope="row"><%= count %></th>
+                <td><%= offer.title %></td>
+                <td><%= offer.price %></td>
+                <td><%= offer.time %></td>
+                <td><%= offer.in_person %></td>
+                <td><%= link_to 'More Details', offer_path(offer) %></td>
+              </tr>
+              <% count += 1 %>
+            <% end %>
+          </tbody>
+        </table>
       <% end %>
-    </tbody>
-  </table>
-<% end %>
+      
+      <% if @profile.user.has_role?(:stylist) %>
+        <% if @profile.has_offers == true %>
+          <%= link_to 'Show Offers', offers_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %> |
+        <% end %>
+        <% if @profile.user_id == current_user.id%>
+          <%= link_to 'Create Offer', new_offer_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %>
+        <% end %>
+      <% end %>
+      <hr>
+    </div>
 
-<% if @profile.user.has_role?(:stylist) %>
-  <% if @profile.has_offers == true %>
-    <%= link_to 'Show Offers', offers_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %> |
-  <% end %>
-  <% if @profile.user_id == current_user.id%>
-    <%= link_to 'Create Offer', new_offer_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %>
-  <% end %>
-<% end %>
-<hr>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <% if @profile.username.present? %>
+        <h2><%= @profile.username %>'s Posts</h2>
+      <% end %>
 
-<% if @profile.location.suburb.present? && @profile.location.state.present? %>
-  <iframe
-    width="600"
-    height="450"
-    frameborder="0" style="border:0"
-    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkSRowtnJmqvtEC9Lq7H7YRKKKfKE7yMQ
-      &zoom=10&q=<%= @profile.location.full_address %>" allowfullscreen>
-  </iframe>
-<% end %>
+      <% if !@profile.user.posts.present? %>
+        <p>No posts yet...</p>
+        <h3>Create a <%= link_to 'Post', new_post_path(@profile.user.id) %></h3>
+      <% end %>
 
-<% if @profile.username.present? %>
-  <h2><%= @profile.username %>'s Posts</h2>
-<% end %>
+      <% @profile.user.posts.each do |post| %>
+        <p>Post <%= post.id %></p>
+        <%= link_to image_tag(post.image_url(:post)), post_path(post) %> <br><br>
+        <p><%= post.content %></p> <br>
+        <hr>
 
-<% if !@profile.user.posts.present? %>
-  <p>No posts yet...</p>
-  <h3>Create a <%= link_to 'Post', new_post_path(@profile.user.id) %></h3>
-<% end %>
+        <div id="comments" style="margin-left:3em">
+          <h4 style="font-weight:bold">Comments</h4>
+          <% post.comments.each do |comment| %>
+          <strong><h4><%= comment.user.profile.username %></h4></strong>
+            <%= comment.content %>
+            <br><br>
+          <% end %>
+        </div>
+        <hr>
+      <% end %>
+    </div>
 
-<% @profile.user.posts.each do |post| %>
-  <p>Post <%= post.id %></p>
-  <%= link_to image_tag(post.image_url(:post)), post_path(post) %>
-  <%= post.content %> <br>
-  <%= link_to 'Show', post_path(post) %>
-  <hr>
-<% end %>
+    <div class="col-sm" style="max-width:600px;max-height:450px">
+      <% if @profile.location.suburb.present? && @profile.location.state.present? %>
+        <iframe
+          width="100%"
+          height="100%"
+          frameborder="0" style="border:0"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkSRowtnJmqvtEC9Lq7H7YRKKKfKE7yMQ
+            &zoom=10&q=<%= @profile.location.full_address %>" allowfullscreen>
+        </iframe>
+      <% end %>
+    </div>
+  </div>
+</div>
