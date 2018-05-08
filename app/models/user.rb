@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :posts
   has_many :offers
   has_many :deals
+  has_many :comments
   has_one :profile
 
   after_create :set_role

@@ -19,6 +19,7 @@ class OffersController < ApplicationController
   # GET /offers/new
   def new
     @offer = Offer.new(offer_params)
+    # render plain: params
   end
 
   # GET /offers/1/edit
@@ -30,11 +31,11 @@ class OffersController < ApplicationController
   def create
     @offer = Offer.new(offer_params)
     @offer.user_id = current_user.id
-    @offer.profile.has_offers = true
-    @offer.profile.save
     
     respond_to do |format|
       if @offer.save
+        @offer.profile.has_offers = true
+        @offer.profile.save
         format.html { redirect_to @offer, notice: 'Offer was successfully created.' }
         format.json { render :show, status: :created, location: @offer }
       else

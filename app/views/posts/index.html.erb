@@ -44,14 +44,26 @@
         <td><%= post.content %></td>        
         <td><%= image_tag post.image_url(:post) %></td>
         <td><%= post.owner_role %></td>
-        <td><%= post.user.profile.username %></td>        
-        <td><%= link_to 'Show', post %></td>
+        <td><%= post.user.profile.username %></td>   
+      <!--  <td><%= link_to "Comment" %></td> -->
+        <td><%= link_to 'Show', post_path(post) %></td>  
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td> <br>
       </tr>
+      <div>
+      <tr>
+        <% post.comments.each do |comment| %>
+        <td>Comments</td>
+        <td><%= comment.user.profile.username %></td>
+        <td><%= comment.content %></td>
+        <% end %>
+      </tr>
+      </div>
     <% end %>
   </tbody>
 </table>
+
+
 
 <br>
 
