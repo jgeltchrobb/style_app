@@ -82,9 +82,9 @@
         <p>No posts yet...</p>
         <h3>Create a <%= link_to 'Post', new_post_path(@profile.user.id) %></h3>
       <% end %>
-
+      <% count = 1 %>
       <% @profile.user.posts.each do |post| %>
-        <p>Post <%= post.id %></p>
+        <p>Post <%= count %></p>
         <%= link_to image_tag(post.image_url(:post)), post_path(post) %> <br><br>
         <p><%= post.content %></p> <br>
         <hr>
@@ -98,6 +98,7 @@
           <% end %>
         </div>
         <hr>
+        <% count += 1 %>
       <% end %>
     </div>
 

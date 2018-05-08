@@ -3,7 +3,10 @@ class ProfileImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
   include Cloudinary::CarrierWave
-
+  
+  def default_url(*args)
+    "/assets/default.png"
+  end
   # Choose what kind of storage to use for this uploader:
   # storage :file
   # storage :fog

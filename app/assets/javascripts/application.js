@@ -16,3 +16,8 @@
 //= require_tree .
 //= require jquery
 //= require bootstrap-sprockets
+//= require posts.js
+
+$('.myButton').on('click', function (event) {
+  $(this).next('.myDiv').toggle('swing');
+});

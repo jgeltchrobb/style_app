@@ -1,4 +1,4 @@
-<%= form_for(@profile) do |form| %>
+<%= bootstrap_form_for(@profile) do |form| %>
   <% if profile.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
@@ -11,34 +11,30 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :username %>
-    <%= form.text_field :username %>
+  <div class="field login_field">
+    <%= form.text_field :username, hide_label: true, placeholder: "Username" %>
   </div>
 
-  <div class="field">
-    <%= form.label :bio %>
-    <%= form.text_area :bio %>
+  <div class="field login_field">
+    <%= form.text_area :bio, hide_label: true, placeholder: "Bio" %>
   </div>
 
-  <div class="field">
-    <%= form.label :profile_pic %>
-    <%= form.file_field :profile_pic %>
+  <div class="field login_field">
+    <%= form.file_field :profile_pic, hide_label: true, placeholder: "Choose a profile picture" %>
   </div>
 
-  <div class="field">
-    <%= form.label :rating %>
-    <%= form.number_field :rating %>
+  <div class="field login_field">
+    <%= form.number_field :rating, hide_label: true, placeholder: "Rating" %>
   </div>
 
-  <div class="field">
-    <%= form.radio_button :user_role, "stylist" %>
-    <%= form.label :stylist, "Stylist" %>
-    <%= form.radio_button :user_role, "scrub" %>
-    <%= form.label :scrub, "Scrub" %>
+  <div class="field login_field">
+    <%= form.radio_button :user_role, "stylist", hide_label: true %>
+    <%= form.label :stylist %>
+    <%= form.radio_button :user_role, "scrub", hide_label: true %>
+    <%= form.label :scrub %>    
   </div>
 
-  <div class="field">
+  <div class="field login_field">
     <%= form.fields_for :location do |builder| %>
       <%= render "location_fields", :form => builder %>
     <% end %>

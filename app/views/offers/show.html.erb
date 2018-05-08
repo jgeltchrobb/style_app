@@ -27,7 +27,7 @@
 
 <p>
   <strong>User:</strong>
-  <%= @offer.user %>
+  <%= @offer.user.profile.username %>
 </p>
 
 <%= link_to 'Edit', edit_offer_path(@offer) %> |

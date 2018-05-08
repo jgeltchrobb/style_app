@@ -1,56 +1,35 @@
 <h1>Stylists</h1>
 
-<div class="panel panel-default">
-  <div class="panel-body">
-    <form class="form-inline">
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" name="username"  class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="bio">Bio:</label>
-        <input type="text" name="bio"  class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="rating">Rating:</label>
-        <input type="text" name="rating"  class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="suburb">Suburb:</label>
-        <input type="text" name="suburb"  class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="state">State:</label>
-        <input type="text" name="state"  class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="postcode">Postcode:</label>
-        <input type="text" name="postcode"  class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="country">Country:</label>
-        <input type="text" name="country"  class="form-control">
-      </div>
-      <input type="submit" value="Filter" class="btn btn-default">
-    </form>
-  </div>
-</div>
+<%= render 'partials/stylist_filter' %>
 
-<% @profiles.each do |profile| %>
-    <% if profile.user.has_role?(:stylist) %>
-      <%= image_tag profile.profile_pic_url(:medium) %>
-      <%= profile.user.email %>
-      <%= profile.username %>
-      <% if profile.location.latitude.present? && current_user.profile.location.latitude.present? %>
-        <% stylist_loc = [profile.location.latitude,profile.location.longitude] %>
-        <%= "#{Geocoder::Calculations.distance_between(@user_loc, stylist_loc, :units => :km)} km away" %>
-      <% else %>
-        <strong><%= "User has no location info" %></strong>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Stylist</th>
+      <th scope="col">Bio</th>
+      <th scope="col">Distance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @profiles.each do |profile| %>
+      <% if profile.user.has_role?(:stylist) %>
+      <tr>
+        <td class="col-sm-1"><%= link_to image_tag(profile.profile_pic_url(:medium)), profile_path(profile) %></td>
+        <td class="col-sm-1"><%= profile.username %></td> 
+        <td class="col-sm-5"><%= profile.bio %></td>
+        <% if profile.location.latitude.present? && current_user.profile.location.latitude.present? %>
+          <% stylist_loc = [profile.location.latitude,profile.location.longitude] %>
+          <td class="col-sm-1"><%= "#{Geocoder::Calculations.distance_between(@user_loc, stylist_loc, :units => :km)} km away" %></td>
+        <% else %>
+          <strong><%= "User has no location info" %></strong>
+        <% end %>
+        <td><%= link_to 'Profile', profile_path(profile.id) %><br /></td>
+        <br>
+      </tr>
       <% end %>
-      <%= link_to 'Profile', profile_path(profile.id) %><br />
-      <br>
-    <% end %>
-<% end %>
-
+      <% end %>
+  </tbody>
+</table>
 
 

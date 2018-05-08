@@ -10,18 +10,21 @@
   </head>
 
   <body>
+    <div id="main_container">
+      <%= render 'partials/nav_bar' %>
 
-    <%= render 'partials/nav_bar' %>
-  
-    <% if user_signed_in? %>
-      <p>Currently signed in as: <%= current_user.email %></p>
-    <% end %>
+      <div id="move_in">
+        <% if user_signed_in? %>
+          <p>Currently signed in as: <%= current_user.email %></p>
+        <% end %>
+      </div>
+      <div id="move_in">
+        <p class="notice"><%= notice %></p>
+      </div>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+      <%= yield %>
 
-    <%= yield %>
-
-    <%= render 'partials/footer' %>
+      <%= render 'partials/footer' %>
+    </div>
   </body>
 </html>

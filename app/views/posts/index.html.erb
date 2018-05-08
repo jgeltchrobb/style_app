@@ -1,70 +1,72 @@
 <p id="notice"><%= notice %></p>
   
-<div class="panel panel-default">
-  <div class="panel-body">
-    <form class="form-inline">
-      <div class="form-group">
-        <label for="title">Title:</label>
-        <input type="text" name="title"  class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="content">Content:</label>
-        <input type="text" name="content"  class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="owner_role">Account Type:</label>
-        <select name="owner_role" class="form-control">
-          <option disabled selected value> -- select account type -- </option>
-          <option value="stylist">Stylist</option>
-          <option value="scrub">Scrub</option>
-        </select>
-      </div>
-      <input type="submit" value="Filter" class="btn btn-default">
-    </form>
-  </div>
-</div>
+<%= render 'partials/post_filter' %>
 
+<div class="col">
+<div class="row">
 <h1>Posts</h1>
-<table>
+
+<table class="table" id="flexy">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th>Image</th>
-      <th>Owner role</th>
-      <th>Author</th>
-      <th colspan="3"></th>
+      <th scope="col">Image</th>
+      <th scope="col">Title</th>      
+      <th scope="col">Content</th>
+      <th scope="col">Author</th>
+      <th scope="col">Account Type</th>
+      <th scope="col">Created</th>
     </tr>
   </thead>
 
   <tbody>
     <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.title %></td>
-        <td><%= post.content %></td>        
-        <td><%= image_tag post.image_url(:post) %></td>
-        <td><%= post.owner_role %></td>
-        <td><%= post.user.profile.username %></td>   
+  <div class="posts">
+      <tr id="post_index">
+        <td class="col-sm-1"><%= link_to image_tag(post.image_url(:post)), post_path(post) %></td>
+        <td class="col-sm-1"><%= post.title %></td>
+        <td class="col-sm-5"><%= post.content %></td> 
+        <td><%= link_to "Show/Hide", class: "toggleLink" %></td>       
+        <td class="col-sm-1"><%= post.user.profile.username %></td>   
+        <td class="col-sm-1"><%= post.owner_role %></td>
+        <% if (Time.now - post.created_at).to_i / 60 < 60 %>
+          <td class="col-sm-1"><%= (Time.now - post.created_at).to_i / 60 %> minutes ago</td>
+        <% elsif ((Time.now - post.created_at).to_i / 60 / 60) < 24%>
+          <td class="col-sm-1"><%= ((Time.now - post.created_at).to_i / 60) / 60 %> hours ago</td>
+        <% else %>
+          <td class="col-sm-1"><%= (((Time.now - post.created_at).to_i / 60) / 60) / 24 %> days ago</td>
+        <% end %>
+
       <!--  <td><%= link_to "Comment" %></td> -->
+ 
         <td><%= link_to 'Show', post_path(post) %></td>  
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td> <br>
-      </tr>
-      <div>
-      <tr>
-        <% post.comments.each do |comment| %>
-        <td>Comments</td>
-        <td><%= comment.user.profile.username %></td>
-        <td><%= comment.content %></td>
+        <% if post.user == current_user %>  
+          <td><%= link_to 'Edit', edit_post_path(post) %></td>
+          <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td> <br>
+        <% else %>
+          <td></td>
+          <td></td>
         <% end %>
       </tr>
       </div>
+      <tr>
+        <td colspan="12">
+          <% post.comments.each do |comment| %>
+            <div class="comments" style="margin-left:3em">
+              <%= image_tag comment.user.profile.profile_pic_url(:thumb) %>
+              <strong><p><%= comment.user.profile.username.capitalize %></p></strong>
+              <p><%= comment.content %></p>
+            </div>
+          <% end %>
+        </td>
+      </tr>
     <% end %>
   </tbody>
 </table>
 
-
+</div>
 
 <br>
 
 <%= link_to 'New Post', new_post_path %>
+</div>
+

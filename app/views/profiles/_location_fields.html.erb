@@ -1,11 +1,7 @@
 <p>
-  <%= form.label :suburb, "Suburb" %>
-  <%= form.text_field :suburb %><br>
-  <%= form.label :postcode, "Postcode" %>
-  <%= form.text_field :postcode %><br />
-  <%= form.label :state, "State" %>
-  <%= form.text_field :state %><br />
-  <%= form.label :country, "Country" %>
-  <%= form.text_field :country %><br />
+  <%= form.text_field :suburb, hide_label: true, placeholder: "Suburb" %><br>
+  <%= form.text_field :postcode, hide_label: true, placeholder: "Postcode" %><br />
+  <%= form.text_field :state, hide_label: true, placeholder: "State" %><br />
+  <%= form.text_field :country, hide_label: true, placeholder: "Country" %><br />
   <% hidden_field :profile_id, @profile.id %>
 </p>

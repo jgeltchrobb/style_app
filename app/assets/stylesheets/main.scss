@@ -1,3 +1,29 @@
-#tester {
-  color: $cool-red;
+// .table tbody > tr :nth-child(odd) {
+//   background-color: lightgray;
+// }
+
+#main_container {
+  margin: 2em;
+}
+
+footer {
+  margin-left: 2em;
+}
+
+#post_index td {
+  background-color: lightgray;
+}
+
+
+.login_field {
+  max-width :30%;
+}
+
+#move_in {
+  margin-left: 2em;  
+}
+
+.remember_me {
+  display: inline-block;
+  padding: 1em 0;
 }
