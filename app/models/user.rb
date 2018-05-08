@@ -25,8 +25,22 @@ class User < ApplicationRecord
   end
 
   def signup_email
-    UserSignupMailer.send_signup_email(self).deliver
+    begin
+      UserSignupMailer.send_signup_email(self).deliver
+      flash[:success] = "#{@user.name} created"
+      rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => e
+        flash[:success] = "Utente #{@user.name} creato. Problems sending mail"
+      end
+      # redirect_to "/"
   end
+
+  begin
+    UserMailer.welcome_email(@user).deliver
+    flash[:success] = "#{@user.name} created"
+    rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => e
+      flash[:success] = "Utente #{@user.name} creato. Problems sending mail"
+    end
+    redirect_to "/"
 
   def can_create?(post)
     self.has_role?(:admin) || self.has_role?(:author)
