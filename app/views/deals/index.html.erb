@@ -36,7 +36,15 @@
         <td><%= link_to deal.profile.username, profile_path(deal.profile) %></td>
         <td><%= link_to deal.user.profile.username, profile_path(deal.user.profile) %></td>
         <td><%= deal.created_at %></td>        
-        <td><%= link_to 'Show', deal, class: "btn btn-success" %></td>
+        <td><%= link_to 'Show', deal, class: "btn btn-primary" %></td>
+        <% if current_user.has_role?(:scrub) && deal.scrub_agree != true && deal.stylist_agree == true%>
+          <td><%= link_to 'Pending', deal, class: "btn btn-danger" %></td>
+        <% elsif current_user.has_role?(:scrub) && deal.stylist_agree != true %>
+          <td><%= link_to 'Pending', deal, class: "btn btn-danger" %></td>
+        <% end %>       
+        <% if deal.paid %>   
+          <td><%= link_to 'Paid', deal, class: "btn btn-success" %></td>
+        <% end %>
         <% if current_user.has_role?(:admin) %>
           <td><%= link_to 'Edit', edit_deal_path(deal), class: "btn btn-primary" %></td>
           <td><%= link_to 'Delete', deal, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
