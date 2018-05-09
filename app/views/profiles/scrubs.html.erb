@@ -3,28 +3,20 @@
 <%= render 'partials/scrub_filter' %>
 
 <table class="table">
-  <thead>
-    <tr>
-      <th scope="col"></th>
-      <th scope="col">Stylist</th>
-      <th scope="col">Bio</th>
-      <th scope="col">Distance</th>
-    </tr>
-  </thead>
   <tbody>
     <% @profiles.each do |profile| %>
       <% if profile.user.has_role?(:scrub) %>
       <tr>
         <td class="col-sm-1"><%= link_to image_tag(profile.profile_pic_url(:medium)), profile_path(profile) %></td>
-        <td class="col-sm-1"><%= profile.username %></td> 
+        <td class="col-sm-1"><strong><%= profile.username %></strong></td> 
         <td class="col-sm-5"><%= profile.bio %></td>
         <% if profile.location.latitude.present? && current_user.profile.location.latitude.present? %>
           <% scrub_loc = [profile.location.latitude,profile.location.longitude] %>
           <td class="col-sm-1"><%= "#{Geocoder::Calculations.distance_between(@user_loc, scrub_loc, :units => :km)} km away" %></td>
         <% else %>
-          <strong><%= "User has no location info" %></strong>
+          <td><strong><%= "User has no location info" %></td></strong>
         <% end %>
-        <td><%= link_to 'Profile', profile_path(profile.id) %><br /></td>
+        <td><%= link_to 'View Profile', profile_path(profile.id), class: "btn btn-primary" %><br /></td>
         <br>
       </tr>
       <% end %>

@@ -1,6 +1,7 @@
-// .table tbody > tr :nth-child(odd) {
-//   background-color: lightgray;
-// }
+
+html {
+  overflow-y: scroll;
+}
 
 #main_container {
   margin: 2em;
@@ -10,6 +11,10 @@ footer {
   margin-left: 2em;
 }
 
+#account_select_button {
+  padding: 0;
+}
+
 #comments {
   margin-left: 3em;
 }
@@ -17,7 +22,6 @@ footer {
 #post_index td {
   background-color: lightgray;
 }
-
 
 .login_field {
   max-width :30%;
@@ -34,5 +38,30 @@ footer {
 
 #comment_content {
   line-height: 2em;
+  width: 100%;
+  word-wrap: break-word;
 }
 
+.form-group {
+  margin: 0 1em;
+}
+
+.navbar-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar-nav:last-child {
+  margin-right: auto;
+}
+
+hr {
+  border-color: darkgray;
+}
+#deal_screen > thead > tr > th {
+  text-decoration: underline;
+}
+#deal_screen > tbody > tr > * {
+  width: 10em;
+}

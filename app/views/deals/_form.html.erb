@@ -18,10 +18,11 @@
   <% end %>
 
   <% if current_user.id == deal.profile.user.id && !deal.stylist_agree %>
-    <%= button_to 'Agree to deal', { action: "update" }, method: :patch, params: {:deal => {:stylist_agree => "true"}} %>
+    <%= button_to 'Agree to deal', { action: "update" }, method: :patch, params: {:deal => {:stylist_agree => "true"}}, class: "btn btn-success" %>
   <% end %> 
 
   <% if current_user.id == deal.buyer && deal.stylist_agree == true && !deal.scrub_agree %>
-    <%= button_to 'Agree to deal', { action: "update" }, method: :patch, params: {:deal => {:scrub_agree => "true"}} %>
+    <%= button_to 'Agree to deal', { action: "update" }, method: :patch, params: {:deal => {:scrub_agree => "true"}}, class: "btn btn-success" %>
   <% end %>
+  <br>
 <% end %>

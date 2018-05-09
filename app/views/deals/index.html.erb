@@ -1,8 +1,6 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Deals</h1>
 
-<table>
+<table id="deal_screen">
   <thead>
     <tr>
       <th>Price</th>
@@ -11,7 +9,6 @@
       <th>Paid?</th>
       <th>Stylist</th>
       <th>Scrub</th>
-      <th>Offerers account</th>
       <th>Created</th>      
       <th colspan="3"></th>
     </tr>
@@ -20,18 +17,29 @@
   <tbody>
     <% @deals.each do |deal| %>
       <tr>
-        <td><%= deal.offer.price %></td>
-        <td><%= deal.stylist_agree %></td>
-        <td><%= deal.scrub_agree %></td>
-        <td><%= deal.paid %></td>
-        <td><%= deal.profile.username %></td>
-        <td><%= deal.user.profile.username %></td>
-        <td><%= deal.offer.user.email %></td>
+        <td>$<%= deal.offer.price.to_i %></td>
+        <% if deal.stylist_agree %>
+          <td>Yes</td>
+        <% else %>
+          <td>No</td>
+        <% end %>
+        <% if deal.scrub_agree %>
+          <td>Yes</td>
+        <% else %>
+          <td>No</td>
+        <% end %>
+        <% if deal.paid != true %>
+          <td>Pending..</td>
+        <% else %>
+          <td><%= deal.paid %></td>
+        <% end %>
+        <td><%= link_to deal.profile.username, profile_path(deal.profile) %></td>
+        <td><%= link_to deal.user.profile.username, profile_path(deal.user.profile) %></td>
         <td><%= deal.created_at %></td>        
-        <td><%= link_to 'Show', deal %></td>
+        <td><%= link_to 'Show', deal, class: "btn btn-success" %></td>
         <% if current_user.has_role?(:admin) %>
-          <td><%= link_to 'Edit', edit_deal_path(deal) %></td>
-          <td><%= link_to 'Destroy', deal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Edit', edit_deal_path(deal), class: "btn btn-primary" %></td>
+          <td><%= link_to 'Delete', deal, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
         <% end %>
       </tr>
     <% end %>
@@ -39,5 +47,3 @@
 </table>
 
 <br>
-
-<%= link_to 'New Deal', new_deal_path %>

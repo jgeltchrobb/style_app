@@ -4,18 +4,14 @@
 <div class="col">
 <div class="row">
 <h1>Posts</h1>
-
+<hr>
 <%= render 'partials/post_filter' %>
+
 
 <table class="table" id="flexy">
   <thead>
     <tr>
-      <th scope="col">Image</th>
-      <th scope="col">Title</th>      
-      <th scope="col">Content</th>
-      <th scope="col">Author</th>
-      <th scope="col">Account Type</th>
-      <th scope="col">Created</th>
+      <th scope="col"><%= link_to 'New Post', new_post_path, class: "btn btn-primary"%></th>     
     </tr>
   </thead>
 
@@ -24,10 +20,10 @@
   <div class="posts">
       <tr id="post_index">
         <td class="col-sm-1"><%= link_to image_tag(post.image_url(:post)), post_path(post) %></td>
-        <td class="col-sm-1"><%= post.title %></td>
+        <td class="col-sm-1"><strong><%= post.user.profile.username %></strong></td>
         <td class="col-sm-5"><%= post.content %></td> 
-        <td class="col-sm-1"><%= post.user.profile.username %></td>   
-        <td class="col-sm-1"><%= post.owner_role %></td>
+        <td class="col-sm-1"><%= post.title %></td>
+        <td class="col-sm-1"><strong><%= post.owner_role.capitalize %></td></strong>
         <% if (Time.now - post.created_at).to_i / 60 < 60 %>
           <td class="col-sm-1"><%= (Time.now - post.created_at).to_i / 60 %> minutes ago</td>
         <% elsif ((Time.now - post.created_at).to_i / 60 / 60) < 24%>
@@ -38,10 +34,10 @@
 
       <!--  <td><%= link_to "Comment" %></td> -->
  
-        <td><%= link_to 'Show', post_path(post) %></td>  
+        <td><%= link_to 'Show', post_path(post), class: "btn btn-success" %></td>  
         <% if post.user == current_user %>  
-          <td><%= link_to 'Edit', edit_post_path(post) %></td>
-          <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td> <br>
+          <td><%= link_to 'Edit', edit_post_path(post), class: "btn btn-primary" %></td>
+          <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td> <br>
         <% else %>
           <td></td>
           <td></td>
@@ -50,6 +46,7 @@
       </div>
       <tr>
         <td colspan="12">
+        <br>
           <% post.comments.each do |comment| %>
             <div id="comments" class="row" style="margin-bottom:1em;">
               <div class="comment_pic col-sm-0.5">
@@ -71,6 +68,7 @@
                 <%= (((Time.now - comment.created_at).to_i / 60) / 60) / 24 %> days ago 
               <% end %>
               <p id="comment_content"><%= comment.content %></p>
+              <hr>
               </div>
             </div>
           <% end %>
@@ -84,6 +82,5 @@
 
 <br>
 
-<%= link_to 'New Post', new_post_path %>
 </div>
 

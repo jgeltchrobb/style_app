@@ -24,6 +24,7 @@
 <p><%= comment.content %></p>
 <% end %>
 
-
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Profile', profile_path(@post.user.profile.id) %>
+<% if current_user == @post.user %>
+  <%= link_to 'Edit', edit_post_path(@post), class: "btn btn-primary" %>
+<% end %>
+<%= link_to 'Profile', profile_path(@post.user.profile.id), class: "btn btn-success" %>

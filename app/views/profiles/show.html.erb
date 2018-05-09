@@ -5,27 +5,41 @@
       <div class="col-md">
         <%= image_tag @profile.profile_pic_url(:profile) %>
 
-        <h2>
-          <%= @profile.username %>
-        </h2>
+        <% if @profile.user.has_role?(:stylist) %>
+          <h2>
+            Stylist <%= @profile.username %>
+          </h2>
+        <% elsif @profile.user.has_role?(:scrub) %>
+          <h2>
+            Scrub <%= @profile.username %>
+          </h2>
+        <% else %>
+          <h2>
+            <%= @profile.username %>
+          </h2>
+        <% end %>
+                <% if @profile.user_id == current_user.id %>
+          <%= link_to 'Edit Profile', edit_profile_path(@profile), class: "btn btn-primary" %>
+        <% end %>
+        <br><br>
 
         <p>
           <strong>Rating:</strong>
           <%= @profile.rating %>
         </p>
 
-        <% if @profile.user_id == current_user.id %>
-          <%= link_to 'Edit Profile', edit_profile_path(@profile) %>
-        <% end %>
-        <hr>
+
       </div>
-      
+      <br>
       <div class="col-md-12">
         <p>
           <strong>Bio:</strong>
           <%= @profile.bio %>
         </p>
       </div>
+      <br>
+        <hr>
+      
     </div>
 
     <div class="col-sm">
@@ -52,7 +66,7 @@
                 <td><%= offer.price %></td>
                 <td><%= offer.time %></td>
                 <td><%= offer.in_person %></td>
-                <td><%= link_to 'More Details', offer_path(offer) %></td>
+                <td><%= link_to 'More Details', offer_path(offer), class: "btn btn-primary" %></td>
               </tr>
               <% count += 1 %>
             <% end %>
@@ -62,45 +76,80 @@
       
       <% if @profile.user.has_role?(:stylist) %>
         <% if @profile.has_offers == true %>
-          <%= link_to 'Show Offers', offers_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %> |
+          <%= link_to 'Show Offers', offers_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}), class: "btn btn-success" %>
         <% end %>
         <% if @profile.user_id == current_user.id%>
-          <%= link_to 'Create Offer', new_offer_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}) %>
+          <%= link_to 'Create Offer', new_offer_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}), class: "btn btn-primary" %>
         <% end %>
       <% end %>
       <hr>
     </div>
 
-  </div>
-  <div class="row">
-    <div class="col-sm">
-      <% if @profile.username.present? %>
-        <h2><%= @profile.username %>'s Posts</h2>
-      <% end %>
 
-      <% if !@profile.user.posts.present? %>
-        <p>No posts yet...</p>
-        <h3>Create a <%= link_to 'Post', new_post_path(@profile.user.id) %></h3>
-      <% end %>
-      <% count = 1 %>
-      <% @profile.user.posts.each do |post| %>
-        <p>Post <%= count %></p>
-        <%= link_to image_tag(post.image_url(:post)), post_path(post) %> <br><br>
-        <p><%= post.content %></p> <br>
-        <hr>
+<table style="width:50%;">
+  <tbody>
+    <% @profile.user.posts.each do |post| %>
+  <div class="posts">
+      <tr id="post_index">
+        <td class="col-sm-1" style="padding:1em 0.5em;"><%= link_to image_tag(post.image_url(:post)), post_path(post) %></td>
+        <td class="col-sm-1"><strong><%= post.user.profile.username %></strong></td>
+        <td class="col-sm-5"><%= truncate post.content, length: 30 %> <%= link_to "read more", post if post.content.length > 30 %></td> 
+        <td class="col-sm-1"><%= post.title %></td>
+        <% if (Time.now - post.created_at).to_i / 60 < 60 %>
+          <td class="col-sm-1"><%= (Time.now - post.created_at).to_i / 60 %> minutes ago</td>
+        <% elsif ((Time.now - post.created_at).to_i / 60 / 60) < 24%>
+          <td class="col-sm-1"><%= ((Time.now - post.created_at).to_i / 60) / 60 %> hours ago</td>
+        <% else %>
+          <td class="col-sm-1"><%= (((Time.now - post.created_at).to_i / 60) / 60) / 24 %> days ago</td>
+        <% end %>
 
-        <div id="comments" style="margin-left:3em">
-          <h4 style="font-weight:bold">Comments</h4>
+        <td><%= link_to 'Show', post_path(post), class: "btn btn-success" %></td>  
+        <% if post.user == current_user %>  
+          <td><%= link_to 'Edit', edit_post_path(post), class: "btn btn-primary" %></td>
+          <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td> <br>
+        <% else %>
+          <td></td>
+          <td></td>
+        <% end %>
+      </tr>
+      </div>
+      <tr>
+        <td colspan="12">
+        <br>
           <% post.comments.each do |comment| %>
-          <strong><h4><%= comment.user.profile.username %></h4></strong>
-            <%= comment.content %>
-            <br><br>
+            <div id="comments" class="row" style="margin-bottom:1em;">
+              <div class="comment_pic col-sm-0.5">
+                <% if comment.user.profile.profile_pic.present? %>
+                  <%= link_to image_tag(comment.user.profile.profile_pic_url(:thumb)), profile_path(comment.user.profile) %>
+                <% else %>
+                  <%= link_to image_tag("default.png", size: "50x50", alt: "Default profile pic"), profile_path(comment.user.profile) %>
+                <% end %>
+              </div>
+              <div class="col-sm-10">
+              <% if comment.user.profile.username.present? %>
+                <strong><%= comment.user.profile.username.capitalize %></strong>
+              <% end %>
+              <% if (Time.now - comment.created_at).to_i / 60 < 60 %>
+                <%= (Time.now - comment.created_at).to_i / 60 %> minutes ago  
+              <% elsif ((Time.now - comment.created_at).to_i / 60 / 60) < 24%>
+                <%= ((Time.now - comment.created_at).to_i / 60) / 60 %> hours ago
+              <% else %>
+                <%= (((Time.now - comment.created_at).to_i / 60) / 60) / 24 %> days ago 
+              <% end %>
+              <p id="comment_content"><%= comment.content %></p>
+              <hr>
+              </div>
+            </div>
           <% end %>
-        </div>
-        <hr>
-        <% count += 1 %>
-      <% end %>
-    </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+
 
     <div class="col-sm" style="max-width:600px;max-height:450px">
       <% if @profile.location.suburb.present? && @profile.location.state.present? %>

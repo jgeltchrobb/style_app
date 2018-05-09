@@ -13,11 +13,10 @@
     <div id="main_container">
       <%= render 'partials/nav_bar' %>
 
-      <div id="move_in">
-        <% if user_signed_in? %>
-          <p>Currently signed in as: <%= current_user.email %></p>
-        <% end %>
-      </div>
+                  <% if user_signed_in? %>
+              <p style="text-align:right;" >Currently signed in as: <%= current_user.email %></p>
+            <% end %>
+
       <div id="move_in">
         <p class="notice"><%= notice %></p>
       </div>

@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 
 <%= render 'form', deal: @deal %>
 
@@ -28,6 +27,7 @@
     <% end %>
   <% end %>
 <% end %>
+<br>
 
 <p>
   <strong>Stylist agreed to offer:</strong>
@@ -81,7 +81,6 @@
   <%= @deal.offer.in_person %>
 </p>
 
-<%= link_to 'Edit', edit_deal_path(@deal) %> |
-<%= link_to 'Back', deals_path %>
+<%= link_to 'Back', deals_path, class: "btn btn-secondary" %>
 
 
