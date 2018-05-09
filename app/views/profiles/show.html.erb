@@ -42,7 +42,6 @@
     </div>
 
     <div class="col-sm">
-      <% if @profile.has_offers %>
         <h3>Offers</h3>
         <table class="table">
           <thead>
@@ -56,6 +55,7 @@
             </tr>
           </thead>
 
+      <% if @profile.has_offers %>
           <tbody>
             <% count = 1 %>
             <% @profile.offers.each do |offer| %>
