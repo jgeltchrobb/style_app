@@ -1,9 +1,6 @@
-<div class="col">
-  <div class="row">
-    <div class="col">
-      <div class="col-md">
+    <div class="col-sm-6">
+      <div>
         <%= image_tag @profile.profile_pic_url(:profile) %>
-
         <% if @profile.user.has_role?(:stylist) %>
           <h2>
             Stylist <%= @profile.username %>
@@ -17,144 +14,142 @@
             <%= @profile.username %>
           </h2>
         <% end %>
-                <% if @profile.user_id == current_user.id %>
+        <% if @profile.user_id == current_user.id %>
           <%= link_to 'Edit Profile', edit_profile_path(@profile), class: "btn btn-primary" %>
         <% end %>
         <br><br>
-
         <p>
           <strong>Rating:</strong>
           <%= @profile.rating %>
         </p>
-
-
       </div>
-      <br>
+        <br>
       <div class="col-md-12">
         <p>
           <strong>Bio:</strong>
           <%= @profile.bio %>
         </p>
       </div>
-      <br>
-        <hr>
-      
-    </div>
-
-    <div class="col-sm">
-        <h3>Offers</h3>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Title</th>
-              <th scope="col">Price</th>
-              <th scope="col">Time</th>
-              <th scope="col">In Person</th>
-              <th scope="col">See More</th>              
-            </tr>
-          </thead>
-
-      <% if @profile.has_offers %>
-          <tbody>
-            <% count = 1 %>
-            <% @profile.offers.each do |offer| %>
-              <tr>
-                <th scope="row"><%= count %></th>
-                <td><%= offer.title %></td>
-                <td><%= offer.price %></td>
-                <td><%= offer.time %></td>
-                <td><%= offer.in_person %></td>
-                <td><%= link_to 'More Details', offer_path(offer), class: "btn btn-primary" %></td>
-              </tr>
-              <% count += 1 %>
-            <% end %>
-          </tbody>
-        </table>
-      <% end %>
-      
-      <% if @profile.user.has_role?(:stylist) %>
-        <% if @profile.has_offers == true %>
-          <%= link_to 'Show Offers', offers_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}), class: "btn btn-success" %>
-        <% end %>
-        <% if @profile.user_id == current_user.id%>
-          <%= link_to 'Create Offer', new_offer_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}), class: "btn btn-primary" %>
-        <% end %>
-      <% end %>
-      <hr>
-    </div>
-
-<table style="width:50%;">
-  <tbody>
-    <% @profile.user.posts.each do |post| %>
-  <div class="posts">
-      <tr id="post_index">
-        <td class="col-sm-1" style="padding:1em 0.5em;"><%= link_to image_tag(post.image_url(:post)), post_path(post) %></td>
-        <td class="col-sm-1"><strong><%= post.user.profile.username %></strong></td>
-        <td class="col-sm-5"><%= truncate post.content, length: 30 %> <%= link_to "read more", post if post.content.length > 30 %></td> 
-        <td class="col-sm-1"><%= post.title %></td>
-        <% if (Time.now - post.created_at).to_i / 60 < 60 %>
-          <td class="col-sm-1"><%= (Time.now - post.created_at).to_i / 60 %> minutes ago</td>
-        <% elsif ((Time.now - post.created_at).to_i / 60 / 60) < 24%>
-          <td class="col-sm-1"><%= ((Time.now - post.created_at).to_i / 60) / 60 %> hours ago</td>
-        <% else %>
-          <td class="col-sm-1"><%= (((Time.now - post.created_at).to_i / 60) / 60) / 24 %> days ago</td>
-        <% end %>
-
-        <td><%= link_to 'Show', post_path(post), class: "btn btn-success" %></td>  
-        <% if post.user == current_user %>  
-          <td><%= link_to 'Edit', edit_post_path(post), class: "btn btn-primary" %></td>
-          <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td> <br>
-        <% else %>
-          <td></td>
-          <td></td>
-        <% end %>
-      </tr>
-      </div>
-      <tr>
-        <td colspan="12">
         <br>
-          <% post.comments.each do |comment| %>
-            <div id="comments" class="row" style="margin-bottom:1em;">
-              <div class="comment_pic col-sm-0.5">
-                <% if comment.user.profile.profile_pic.present? %>
-                  <%= link_to image_tag(comment.user.profile.profile_pic_url(:thumb)), profile_path(comment.user.profile) %>
-                <% else %>
-                  <%= link_to image_tag("default.png", size: "50x50", alt: "Default profile pic"), profile_path(comment.user.profile) %>
-                <% end %>
-              </div>
-              <div class="col-sm-10">
-              <% if comment.user.profile.username.present? %>
-                <strong><%= comment.user.profile.username.capitalize %></strong>
-              <% end %>
-              <% if (Time.now - comment.created_at).to_i / 60 < 60 %>
-                <%= (Time.now - comment.created_at).to_i / 60 %> minutes ago  
-              <% elsif ((Time.now - comment.created_at).to_i / 60 / 60) < 24%>
-                <%= ((Time.now - comment.created_at).to_i / 60) / 60 %> hours ago
-              <% else %>
-                <%= (((Time.now - comment.created_at).to_i / 60) / 60) / 24 %> days ago 
-              <% end %>
-              <p id="comment_content"><%= comment.content %></p>
-              <hr>
-              </div>
-            </div>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        <hr>
+        <%= link_to 'New Post', new_post_path(@profile), class: "btn btn-success" %>
 
-    <div class="col-sm" style="max-width:600px;max-height:450px">
-      <% if @profile.location.suburb.present? && @profile.location.state.present? %>
-        <iframe
-          width="100%"
-          height="100%"
-          frameborder="0" style="border:0"
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkSRowtnJmqvtEC9Lq7H7YRKKKfKE7yMQ
-            &zoom=10&q=<%= @profile.location.full_address %>" allowfullscreen>
-        </iframe>
-      <% end %>
-    </div>
+
+<%# <div class="posts" style="background-color:yellow;"> %>
+    <table style="width:50%;">
+      <tbody>
+        <% @profile.user.posts.each do |post| %>
+          <tr id="post_index">
+            <td class="col-sm-1" style="padding:1em 0.5em;"><%= link_to image_tag(post.image_url(:post)), post_path(post) %></td>
+            <td class="col-sm-1"><strong><%= post.user.profile.username %></strong></td>
+            <td class="col-sm-5"><%= truncate post.content, length: 30 %> <%= link_to "read more", post if post.content.length > 30 %></td> 
+            <td class="col-sm-1"><%= post.title %></td>
+            <% if (Time.now - post.created_at).to_i / 60 < 60 %>
+              <td class="col-sm-1"><%= (Time.now - post.created_at).to_i / 60 %> minutes ago</td>
+            <% elsif ((Time.now - post.created_at).to_i / 60 / 60) < 24%>
+              <td class="col-sm-1"><%= ((Time.now - post.created_at).to_i / 60) / 60 %> hours ago</td>
+            <% else %>
+              <td class="col-sm-1"><%= (((Time.now - post.created_at).to_i / 60) / 60) / 24 %> days ago</td>
+            <% end %>
+
+            <td><%= link_to 'Show', post_path(post), class: "btn btn-success" %></td>  
+            <% if post.user == current_user %>  
+              <td><%= link_to 'Edit', edit_post_path(post), class: "btn btn-primary" %></td>
+              <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td> <br>
+            <% else %>
+              <td></td>
+              <td></td>
+            <% end %>
+          </tr>
+          </div>
+        <div id="comments" class="row" style="margin-bottom:1em;">
+          <tr>
+            <td colspan="12">
+              <br>
+              <% post.comments.each do |comment| %>
+                <div class="comment_pic col-sm-1">
+                  <% if comment.user.profile.profile_pic.present? %>
+                    <%= link_to image_tag(comment.user.profile.profile_pic_url(:thumb)), profile_path(comment.user.profile) %>
+                  <% else %>
+                    <%= link_to image_tag("default.png", size: "50x50", alt: "Default profile pic"), profile_path(comment.user.profile) %>
+                  <% end %>
+                </div>
+                <div class="col-sm-11">
+                <% if comment.user.profile.username.present? %>
+                  <strong><%= comment.user.profile.username.capitalize %></strong>
+                <% end %>
+                <% if (Time.now - comment.created_at).to_i / 60 < 60 %>
+                  <%= (Time.now - comment.created_at).to_i / 60 %> minutes ago  
+                <% elsif ((Time.now - comment.created_at).to_i / 60 / 60) < 24%>
+                  <%= ((Time.now - comment.created_at).to_i / 60) / 60 %> hours ago
+                <% else %>
+                  <%= (((Time.now - comment.created_at).to_i / 60) / 60) / 24 %> days ago 
+                <% end %>
+                <p id="comment_content"><%= comment.content %></p>
+                <hr>
+                </div>
+              <% end %>
+            </td>
+          </tr>
+        </div>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>
+
+<div class="col-sm-6" style="position:fixed;right:1px;">
+  <div class="col">
+    <h3>Offers</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Price</th>
+          <th scope="col">Time</th>
+          <th scope="col">In Person</th>
+          <th scope="col">See More</th>              
+        </tr>
+      </thead>
+      <% if @profile.has_offers %>
+      <tbody>
+        <% count = 1 %>
+        <% @profile.offers.each do |offer| %>
+          <tr>
+            <th scope="row"><%= count %></th>
+            <td><%= offer.title %></td>
+            <td><%= offer.price %></td>
+            <td><%= offer.time %></td>
+            <td><%= offer.in_person %></td>
+            <td><%= link_to 'More Details', offer_path(offer), class: "btn btn-primary" %></td>
+          </tr>
+          <% count += 1 %>
+        <% end %>
+      </tbody>
+      <% end %>
+    </table>
+    <% if @profile.user.has_role?(:stylist) %>
+      <% if @profile.has_offers == true %>
+        <%= link_to 'Show Offers', offers_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}), class: "btn btn-success" %>
+      <% end %>
+      <% if @profile.user_id == current_user.id%>
+        <%= link_to 'Create Offer', new_offer_path(params: {:offer => {:user_id => @profile.user_id, :profile_id => @profile.id}}), class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+    <hr>
+  </div>
+
+  <div class="col" style="max-width:600px;max-height:450px;">
+    <% if @profile.location.suburb.present? && @profile.location.state.present? %>
+      <iframe
+        width="100%"
+        height="100%"
+        frameborder="0" style="border:0"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkSRowtnJmqvtEC9Lq7H7YRKKKfKE7yMQ
+          &zoom=10&q=<%= @profile.location.full_address %>" allowfullscreen>
+      </iframe>
+    <% end %>
+  </div> 
+</div>
+
