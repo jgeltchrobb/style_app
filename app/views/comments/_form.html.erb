@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="field login_field">
-    <%= form.text_area :content %>
+    <%= form.text_area :content, hide_label: true, placeholder: "Comment here..." %>
   </div>
 <br>
   <%= form.hidden_field :user_id %>

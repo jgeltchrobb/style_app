@@ -23,12 +23,12 @@ class DealsController < ApplicationController
     @user = current_user
     @deal = deal
     # Sends email to stylist
-    begin
-    DealNotifierMailer.send_deal_email(@deal, @user).deliver
-    flash[:success] = "Deal created!"
-    rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => e
-      flash[:success] = "Deal created, however problems sending notification email to stylist"
-    end
+    # begin
+    # DealNotifierMailer.send_deal_email(@deal, @user).deliver
+    # flash[:success] = "Deal created!"
+    # rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => e
+    #   flash[:success] = "Deal created, however problems sending notification email to stylist"
+    # end
   end
 
   # GET /deals/new
@@ -71,7 +71,7 @@ class DealsController < ApplicationController
         if @deal.stylist_agree == true && @deal.scrub_agree != true
           @buyer = @deal.user
           # Sends email to buyer
-          AcceptedNotifierMailer.send_accepted_email(@deal, @buyer).deliver
+          # AcceptedNotifierMailer.send_accepted_email(@deal, @buyer).deliver
         end
         format.html { redirect_to @deal, notice: 'Deal was successfully updated.' }
         format.json { render :show, status: :ok, location: @deal }

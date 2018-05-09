@@ -1,18 +1,11 @@
 <%= image_tag @post.image_url(:post) %>
 
 <p>
-  <strong>Title:</strong>
-  <%= @post.title %>
+  <strong><%= @post.title %></strong>
 </p>
 
 <p>
-  <strong>Content:</strong>
   <%= @post.content %>
-</p>
-
-<p>
-  <strong>Owner role:</strong>
-  <%= @post.owner_role %>
 </p>
 
 <%= render 'comments/form', comment: Comment.new(user_id: current_user.id, post_id: @post.id) %>
