@@ -1,10 +1,11 @@
 <p id="notice"><%= notice %></p>
   
-<%= render 'partials/post_filter' %>
 
 <div class="col">
 <div class="row">
 <h1>Posts</h1>
+
+<%= render 'partials/post_filter' %>
 
 <table class="table" id="flexy">
   <thead>
@@ -25,7 +26,6 @@
         <td class="col-sm-1"><%= link_to image_tag(post.image_url(:post)), post_path(post) %></td>
         <td class="col-sm-1"><%= post.title %></td>
         <td class="col-sm-5"><%= post.content %></td> 
-        <td><%= link_to "Show/Hide", class: "toggleLink" %></td>       
         <td class="col-sm-1"><%= post.user.profile.username %></td>   
         <td class="col-sm-1"><%= post.owner_role %></td>
         <% if (Time.now - post.created_at).to_i / 60 < 60 %>
@@ -51,10 +51,27 @@
       <tr>
         <td colspan="12">
           <% post.comments.each do |comment| %>
-            <div class="comments" style="margin-left:3em">
-              <%= image_tag comment.user.profile.profile_pic_url(:thumb) %>
-              <strong><p><%= comment.user.profile.username.capitalize %></p></strong>
-              <p><%= comment.content %></p>
+            <div id="comments" class="row" style="margin-bottom:1em;">
+              <div class="comment_pic col-sm-0.5">
+                <% if comment.user.profile.profile_pic.present? %>
+                  <%= link_to image_tag(comment.user.profile.profile_pic_url(:thumb)), profile_path(comment.user.profile) %>
+                <% else %>
+                  <%= link_to image_tag("default.png", size: "50x50", alt: "Default profile pic"), profile_path(comment.user.profile) %>
+                <% end %>
+              </div>
+              <div class="col-sm-6">
+              <% if comment.user.profile.username.present? %>
+                <strong><%= comment.user.profile.username.capitalize %></strong>
+              <% end %>
+              <% if (Time.now - comment.created_at).to_i / 60 < 60 %>
+                <%= (Time.now - comment.created_at).to_i / 60 %> minutes ago  
+              <% elsif ((Time.now - comment.created_at).to_i / 60 / 60) < 24%>
+                <%= ((Time.now - comment.created_at).to_i / 60) / 60 %> hours ago
+              <% else %>
+                <%= (((Time.now - comment.created_at).to_i / 60) / 60) / 24 %> days ago 
+              <% end %>
+              <p id="comment_content"><%= comment.content %></p>
+              </div>
             </div>
           <% end %>
         </td>

@@ -10,6 +10,10 @@ footer {
   margin-left: 2em;
 }
 
+#comments {
+  margin-left: 3em;
+}
+
 #post_index td {
   background-color: lightgray;
 }
@@ -27,3 +31,8 @@ footer {
   display: inline-block;
   padding: 1em 0;
 }
+
+#comment_content {
+  line-height: 2em;
+}
+

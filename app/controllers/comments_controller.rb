@@ -24,6 +24,7 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
+    not_authorised and return unless current_user.profile.username.present?
     @comment = Comment.new(comment_params)
 
     respond_to do |format|
@@ -70,5 +71,10 @@ class CommentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
       params.require(:comment).permit(:content, :image, :user_id, :post_id)
+    end
+
+    def not_authorised
+      flash[:notice] = "You must create a username before you can comment!"
+      redirect_to edit_profile_path(current_user.profile)
     end
 end
