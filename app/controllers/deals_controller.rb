@@ -4,7 +4,7 @@ class DealsController < ApplicationController
   # GET /deals
   # GET /deals.json
   def index
-    no_deals and return unless Deal.all.find_by(buyer: current_user.id).present?
+    no_deals and return unless (Deal.all.find_by(buyer: current_user.id).present? || Deal.all.find_by(profile_id: current_user.profile.id))
     if current_user.has_role?(:stylist)
       @deals = Deal.all.where(profile_id: current_user.id)
     elsif current_user.has_role?(:scrub)

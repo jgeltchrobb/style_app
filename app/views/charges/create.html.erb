@@ -3,4 +3,4 @@
   <% @deal.paid = true %>
   <% @deal.save %>
 <% end %>
-<h3>Back to <%= link_to 'Deal', deal_path(@deal) %></h3>
+<h3>Back to <%= link_to 'Deal', deal_path(@deal), class: "btn btn-success" %></h3>

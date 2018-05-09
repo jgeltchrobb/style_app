@@ -3,7 +3,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <%= link_to "Posts", posts_path, class: "nav-item nav-link active" %>
-            <% if Deal.all.find_by(buyer: current_user.id).present? %>
+            <% if Deal.all.find_by(buyer: current_user.id).present? || Deal.all.find_by(profile_id: current_user.profile.id) %>
               <%= link_to "Deals", deals_path, class: "nav-item nav-link active" %>
               <% end %>            
             <%= link_to "Stylists", stylists_path, class: "nav-item nav-link active" %>   
