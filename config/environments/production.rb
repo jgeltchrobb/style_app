@@ -84,6 +84,8 @@ Rails.application.configure do
 
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
+  config.action_mailer.default_url_options = { host: 'https://floating-retreat-79607.herokuapp.com' }
+
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
@@ -98,7 +100,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     :user_name => ENV['SENDGRID_USERNAME'],
     :password => ENV['SENDGRID_PASSWORD'],
-    :domain => 'coderacademy.com.au',
+    :domain => 'heroku.com',
     :address => 'smtp.sendgrid.net',
     :port => 587,
     :authentication => :plain,
