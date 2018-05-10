@@ -2,6 +2,8 @@
 
 link: https://crimes-of-fashion.herokuapp.com
 
+github: https://github.com/jgeltchrobb/style_app
+
 # Overview
 
 1. Summary
