@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   after_create :set_role
   after_create :add_profile
-  # after_create :signup_email
+  after_create :signup_email
  
   def set_role
     add_role :author
@@ -24,15 +24,15 @@ class User < ApplicationRecord
     Location.create(profile_id: x.id)
   end
 
-  # def signup_email
-  #     begin
-  #     UserSignupMailer.send_signup_email(self).deliver
-  #     flash[:success] = "Account created"
-  #     rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => e
-  #       flash[:success] = "Account created but an issue sending email"
-  #     end
-  #     # redirect_to "/"
-  # end
+  def signup_email
+      begin
+      UserSignupMailer.send_signup_email(self).deliver
+      flash[:success] = "Account created"
+      rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => e
+        flash[:success] = "Account created but an issue sending email"
+      end
+      # redirect_to "/"
+  end
 
   def can_create?(post)
     self.has_role?(:admin) || self.has_role?(:author)
