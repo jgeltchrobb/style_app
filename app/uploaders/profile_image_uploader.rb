@@ -5,7 +5,7 @@ class ProfileImageUploader < CarrierWave::Uploader::Base
   include Cloudinary::CarrierWave
   
   def default_url(*args)
-    "/assets/default.png"
+    "http://res.cloudinary.com/masho/image/upload/v1525932038/default.png"
   end
   # Choose what kind of storage to use for this uploader:
   # storage :file
