@@ -108,23 +108,23 @@ Create a .env file in the root of the directory, then add your own ENV variables
 
 1. Basic Concept
   - ERD, user stories, wire frames
-  Design completed
+#### Design completed
 
 2. Basic Functionality
   - Pages, MVCs, Devise, Heroku, bootstrap, routes
-Skeleton app ready
+#### Skeleton app ready
 
 3. Add Functionality
   - Add gems and API - cloudinary, carrierwave, geocoder, mailboxer, rolify, googleMaps
-Gems and API installed
+#### Gems and API installed
 
 4. Implement more tools
   - Sendgrid, stripe(dev and production)
-Production stage
+#### Production stage
 
 5. Documentation and fix bugs
  - styling and heroku fixes
-Completed to MVP
+#### Completed to MVP
 
 ## 9. Bugs/Future Updates
 
