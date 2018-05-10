@@ -23,12 +23,14 @@
         <% if @profile.user.has_role?(:stylist) %>
         <%= link_to 'Reviews', reviews_path(:params => {profile_id: @profile.id}), class: "btn btn-info" %>
         <br><br>
-        <p>
-          <strong>Rating:</strong>
-          <% @rating.times do %>
-            <span class='fa fa-star checked_star'></span>
-          <% end %>
-        </p>
+        <% if @profile.rating.present? %>
+          <p>
+            <strong>Rating:</strong>
+            <% @profile.rating.times do %>
+              <span class='fa fa-star checked_star'></span>
+            <% end %>
+          </p>
+        <% end %>
       </div>
       <% end %>
         <br>
