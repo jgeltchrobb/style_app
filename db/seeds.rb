@@ -9,9 +9,23 @@
 password = '123abc'
 
 1.upto(5) do |i|
-  User.create(
+    User.create(
     email: "#{i}-user@example.com",
     password: password,
     password_confirmation: password
   )
+
+  
+  Post.create(
+    title: "Lorem, ipsum dolor",
+    content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi rem eius sed nihil sint necessitatibus illum earum accusantium non atque! Vel quasi, minima, blanditiis voluptatem enim aliquam asperiores nihil sint deserunt odio explicabo consectetur unde!",
+    user_id: i,
+  )
+
+  Comment.create(
+    content: "Love your work mate!",
+    user_id: i,
+    post_id: i,
+  )
+
 end

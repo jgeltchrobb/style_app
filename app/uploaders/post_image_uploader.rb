@@ -4,6 +4,9 @@ class PostImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::MiniMagick
   include Cloudinary::CarrierWave
 
+  def default_url(*args)
+    "http://res.cloudinary.com/masho/image/upload/c_scale,w_150/v1525958042/w7iy3qmrgy9mmwrzq7ky.jpg"
+  end
   # Choose what kind of storage to use for this uploader:
   # storage :file
   # storage :fog
