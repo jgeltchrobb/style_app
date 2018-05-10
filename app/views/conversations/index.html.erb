@@ -1,0 +1,38 @@
+<h1>All Conversations</h1>
+
+<table>
+
+  <thead>
+    <tr class="col">
+      <th class="col-sm-6">Subject</th>
+      <th class="col-sm-6">Recipient</th>
+    </tr>
+  </thead>
+    <br>  
+  <tbody>
+    <% @conversations.each do |conversation| %>
+      <tr>
+        <td><%= link_to conversation.subject, conversation_path(conversation) %></td>
+        <% if current_user.id == conversation.recipients.first.id %>
+          <% if conversation.recipients.last.profile.username.present? %>
+            <td><p><%= link_to conversation.recipients.last.profile.username, profile_path(conversation.recipients.last.profile) %></p></td>
+          <% else %>
+            <td><p><%= link_to conversation.recipients.last.email, profile_path(conversation.recipients.last.profile) %></p></td>
+          <% end %>
+        <% elsif current_user.id == conversation.recipients.last.id %>
+          <% if conversation.recipients.first.profile.username.present? %>
+            <td><p><%= link_to conversation.recipients.first.profile.username, profile_path(conversation.recipients.first.profile) %></p></td>
+          <% else %>
+            <td><p><%= link_to conversation.recipients.first.email, profile_path(conversation.recipients.last.profile) %></p></td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>
+
+
+
+
+

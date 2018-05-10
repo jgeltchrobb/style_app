@@ -44,6 +44,7 @@
         <% end %>       
         <% if deal.paid %>   
           <td><%= link_to 'Paid', deal, class: "btn btn-success" %></td>
+          <td><%= link_to 'Review Stylist', new_review_path(params: {:profile_id => deal.profile.id, :deal_id => deal.id}), class: "btn btn-info" %></td>
         <% end %>
         <% if current_user.has_role?(:admin) %>
           <td><%= link_to 'Edit', edit_deal_path(deal), class: "btn btn-primary" %></td>

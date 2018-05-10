@@ -1,0 +1,28 @@
+<h1><%= @reviews.first.profile.username %>'s Reviews</h1>
+  <%# params[:profile_id] %>
+<br>
+  <table class="table table-light">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Scrub</th>
+      <th scope="col">Rating</th>
+      <th scope="col">Review</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% count = 1 %>
+    <% @reviews.each do |review| %>
+    
+      <tr>
+        <th scope="row" class="col-sm-1"><%= count %></th>
+        <td class="col-sm-1"><%= review.deal.user.profile.username %></td>
+        <td class="col-sm-1"><%= review.rating %></td>
+        <td class="col-sm-9"><%= review.content %></td>
+      </tr>
+      <%  count += 1 %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', profile_path(@reviews.first.profile), class: "btn btn-secondary" %>

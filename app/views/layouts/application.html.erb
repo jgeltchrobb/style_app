@@ -6,16 +6,18 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css' %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
   <body>
     <div id="main_container">
       <%= render 'partials/nav_bar' %>
 
-                  <% if user_signed_in? %>
-              <p style="text-align:right;" >Currently signed in as: <%= current_user.email %></p>
-            <% end %>
+      <% if user_signed_in? %>
+        <p style="text-align:right;" >Currently signed in as: <%= current_user.email %></p>
+      <% end %>
 
       <div id="move_in">
         <h3 class="notice" style="font-weight:bold;color:#FC512D;"><%= notice %></h3>

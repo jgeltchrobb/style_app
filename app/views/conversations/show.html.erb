@@ -1,0 +1,20 @@
+<h1><%= @conversation.subject %></h1>
+
+<% @conversation.receipts_for(current_user).each do |receipt| %>
+  <div>
+    <% if current_user.profile.username.present? %>
+      <div><%= receipt.message.sender.profile.username %></div>
+    <% else %>
+      <div><%= receipt.message.sender.email %></div>
+    <% end %>
+    <p><%= receipt.message.body %></p>
+  </div>
+<% end %>
+
+<%= form_tag conversation_messages_path(@conversation), method: :post do %>
+  <div>
+    <%= text_area_tag :body %>
+  </div>
+
+  <%= submit_tag %>
+<% end %>

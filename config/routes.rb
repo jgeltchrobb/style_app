@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   devise_for :users
   resources :posts
   resources :charges
+  resources :conversations do
+    resources :messages
+  end
+  resources :reviews
   # resources :locations
   get 'stylists' => 'profiles#stylists'
   get 'scrubs' => 'profiles#scrubs'

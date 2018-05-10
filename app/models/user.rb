@@ -5,6 +5,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  acts_as_messageable
+
   has_many :posts
   has_many :offers
   has_many :deals
@@ -15,6 +17,10 @@ class User < ApplicationRecord
   after_create :add_profile
   after_create :signup_email
  
+  def mailboxer_email(object)
+    nil
+  end
+
   def set_role
     add_role :author
   end

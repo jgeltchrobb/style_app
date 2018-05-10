@@ -63,9 +63,15 @@ footer {
 hr {
   border-color: darkgray;
 }
+
 #deal_screen > thead > tr > th {
   text-decoration: underline;
 }
+
 #deal_screen > tbody > tr > * {
   width: 10em;
+}
+
+.checked_star {
+  color: orange;
 }

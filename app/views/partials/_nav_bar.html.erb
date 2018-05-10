@@ -8,6 +8,7 @@
               <% end %>            
             <%= link_to "Stylists", stylists_path, class: "nav-item nav-link active" %>   
             <%= link_to "Scrubs", scrubs_path, class: "nav-item nav-link active" %>   
+            <%= link_to "Messages", conversations_path(current_user.id), class: "nav-item nav-link active" %>               
             <%= link_to "Your Profile", profile_path(current_user.profile.id), class: "nav-item nav-link active" %>
             <%= link_to "Account Settings", edit_user_registration_path, class: "nav-item nav-link active" %>
             <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-item nav-link active" %>   

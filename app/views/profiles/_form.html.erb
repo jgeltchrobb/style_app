@@ -23,11 +23,7 @@
   <div class="field login_field">
     <%= form.file_field :profile_pic, hide_label: true, placeholder: "Choose a profile picture" %>
   </div>
-<br>
-  <div class="field login_field">
-    <%= form.number_field :rating, hide_label: true, placeholder: "Rating" %>
-  </div>
-<br>
+  <br> 
 <% if !profile.user_role.present? %>
   <div class="field login_field">
     <%= form.radio_button :user_role, "stylist", hide_label: true %>

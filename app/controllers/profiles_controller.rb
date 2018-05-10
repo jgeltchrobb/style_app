@@ -12,6 +12,23 @@ class ProfilesController < ApplicationController
   def show
     @profile = Profile.find(params[:id])
     @offer = Offer.all.where(:user_id => @profile.user_id)
+    if @profile.user.has_role?(:stylist) && Review.all.where(profile_id: @profile.id).present?
+      @reviews = Review.all.where(profile_id: @profile.id)
+
+      rate_arr = []
+      @reviews.each do |review|
+        if review.rating != nil
+          rate_arr.push(review.rating)
+        end
+      end
+      count = 0
+      rate_arr.each do |x|
+          count += x
+      end
+      @rating = (count / rate_arr.length)
+      @profile.rating = @rating
+      @profile.save
+    end
   end
 
   def stylists
