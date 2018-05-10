@@ -27,9 +27,9 @@ class User < ApplicationRecord
   def signup_email
       begin
       UserSignupMailer.send_signup_email(self).deliver
-      flash[:success] = "Account created"
+      notice[:success] = "Account created"
       rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => e
-        flash[:success] = "Account created but an issue sending email"
+        notice[:success] = "Account created but an issue sending email"
       end
       # redirect_to "/"
   end
