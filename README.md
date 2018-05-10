@@ -49,27 +49,28 @@ STRIPE_SECRET_KEY=XXXX
 
 
 ## 4. Wireframing
-Posts
+
+### Posts
 
 ![This is the Wireframe](app/assets/images/Style_app_wireframes/posts.png)
 
-Stylists
+### Stylists
 
 ![This is the Wireframe](app/assets/images/Style_app_wireframes/stylists.png)
 
-Scrubs
+### Scrubs
 
 ![This is the Wireframe](app/assets/images/Style_app_wireframes/scrubs.png)
 
-Your profile
+### Your profile
 
 ![This is the Wireframe](app/assets/images/Style_app_wireframes/your_profile.png)
 
-Deals
+### Deals
 
 ![This is the Wireframe](app/assets/images/Style_app_wireframes/deals.png)
 
-Messages
+### Messages
 
 ![This is the Wireframe](app/assets/images/Style_app_wireframes/messages.png)
 
@@ -78,7 +79,7 @@ Messages
 
 ## 6. ERD
 
-![This is the ERD](app/assets/images/erd.pdf)
+![This is the ERD (its a PDF dude?!)](app/assets/images/erd.pdf)
 
 
 ## 7. List of Tools Used
