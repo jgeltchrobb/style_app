@@ -1,5 +1,7 @@
 # README
 
+link: https://crimes-of-fashion.herokuapp.com
+
 # Overview
 
 1. Summary
@@ -43,18 +45,40 @@ STRIPE_SECRET_KEY=XXXX
 
 ## 3. User Stories
 
+![These are the user stories](app/assets/images/Style_user_stories.png)
+
+
 ## 4. Wireframing
+Posts
+
 ![This is the Wireframe](app/assets/images/Style_app_wireframes/posts.png)
+
+Stylists
+
 ![This is the Wireframe](app/assets/images/Style_app_wireframes/stylists.png)
+
+Scrubs
+
 ![This is the Wireframe](app/assets/images/Style_app_wireframes/scrubs.png)
+
+Your profile
+
 ![This is the Wireframe](app/assets/images/Style_app_wireframes/your_profile.png)
+
+Deals
+
 ![This is the Wireframe](app/assets/images/Style_app_wireframes/deals.png)
+
+Messages
+
 ![This is the Wireframe](app/assets/images/Style_app_wireframes/messages.png)
 
 
 ## 5. Workflow diagram
 
 ## 6. ERD
+
+![This is the ERD](app/assets/images/erd.pdf)
 
 
 ## 7. List of Tools Used
