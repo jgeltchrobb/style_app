@@ -37,11 +37,12 @@ Run rails db:migrate in terminal.
 You may run rails db:seed to start you off with 5 test users.
 
 Create a .env file in the root of the directory, then add your own ENV variables :
-POSTGRES_DATABASE_PASSWORD=XXXX
-SENDGRID_USER=XXXX
-SENDGRID_PASS=XXXX
-STRIPE_PUBLISHABLE_KEY=XXXX
-STRIPE_SECRET_KEY=XXXX
+
+- POSTGRES_DATABASE_PASSWORD=XXXX
+- SENDGRID_USER=XXXX
+- SENDGRID_PASS=XXXX
+- STRIPE_PUBLISHABLE_KEY=XXXX
+- STRIPE_SECRET_KEY=XXXX
 
 ## 3. User Stories
 
@@ -84,24 +85,24 @@ STRIPE_SECRET_KEY=XXXX
 
 ## 7. List of Tools Used
 
-Github - Version control, user stories and to assign story points for project management.
-rails erd (gem) - ERD
-postgresql - Database
-Devise - authentication
-bootstrap sass - styling
-Cloudflare - DNS server
-Webhosting - Heroku
-Sendgrid - emails
-Stripe - payments
-Rubocop - code quality
-Pencil- wireframing
-CarrierWave - image uploads
-dotenv-rails - environmental variables
-geocoder - longitude latitude geocoding
-Google Maps - map locations
-Rolify - Authorisation
-Sendgrid-ruby - production emails
-mailboxer - messaging
+- Github - Version control, user stories and to assign story points for project management.
+- rails erd (gem) - ERD
+- postgresql - Database
+- Devise - authentication
+- bootstrap sass - styling
+- Cloudflare - DNS server
+- Webhosting - Heroku
+- Sendgrid - emails
+- Stripe - payments
+- Rubocop - code quality
+- Pencil- wireframing
+- CarrierWave - image uploads
+- dotenv-rails - environmental variables
+- geocoder - longitude latitude geocoding
+- Google Maps - map locations
+- Rolify - Authorisation
+- Sendgrid-ruby - production emails
+- mailboxer - messaging
 
 ## 8. Project Plan
 
