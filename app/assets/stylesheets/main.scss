@@ -75,3 +75,44 @@ hr {
 .checked_star {
   color: orange;
 }
+
+.message_container {
+  border: 1px solid blue;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  border-radius: 1em;
+}
+
+.username_right {
+  text-align: right;
+  font-weight: bold;
+  line-height: 2em;
+}
+
+.username_left {
+  font-weight: bold;
+  line-height: 2em;
+  
+}
+
+.message_right {
+  align-self: flex-end;
+  background-color: #0f82eb;
+  border-radius: 1em;
+  padding: 0.4em;
+  line-height: 1em;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.message_left {
+  background-color: hsl(112, 90%, 50%);
+  align-self: flex-start;
+  border-radius: 1em;
+  padding: 0.4em;
+  line-height: 1em;  
+  margin-left: 1em;
+  font-weight: bold;
+}

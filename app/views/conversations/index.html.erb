@@ -1,38 +1,37 @@
 <h1>All Conversations</h1>
 
-<table>
+<table class="table">
 
   <thead>
-    <tr class="col">
-      <th class="col-sm-6">Subject</th>
-      <th class="col-sm-6">Recipient</th>
+    <tr>
+      <th scope="col-sm-1">#</th>
+      <th scope="col-sm-4">Subject</th>
+      <th scope="col-sm-4">Recipient</th>
     </tr>
   </thead>
     <br>  
   <tbody>
+    <% count = 1 %>
     <% @conversations.each do |conversation| %>
       <tr>
-        <td><%= link_to conversation.subject, conversation_path(conversation) %></td>
+        <th scope="row" class="col-md-1"><%= count %></th>
+        <td class="col-sm-4"><%= link_to conversation.subject, conversation_path(conversation) %></td>
         <% if current_user.id == conversation.recipients.first.id %>
           <% if conversation.recipients.last.profile.username.present? %>
-            <td><p><%= link_to conversation.recipients.last.profile.username, profile_path(conversation.recipients.last.profile) %></p></td>
+            <td class="col-sm-4"><p><%= link_to conversation.recipients.last.profile.username, profile_path(conversation.recipients.last.profile) %></p></td>
           <% else %>
-            <td><p><%= link_to conversation.recipients.last.email, profile_path(conversation.recipients.last.profile) %></p></td>
+            <td class="col-sm-4"><p><%= link_to conversation.recipients.last.email, profile_path(conversation.recipients.last.profile) %></p></td>
           <% end %>
         <% elsif current_user.id == conversation.recipients.last.id %>
           <% if conversation.recipients.first.profile.username.present? %>
-            <td><p><%= link_to conversation.recipients.first.profile.username, profile_path(conversation.recipients.first.profile) %></p></td>
+            <td class="col-sm-4"><p><%= link_to conversation.recipients.first.profile.username, profile_path(conversation.recipients.first.profile) %></p></td>
           <% else %>
-            <td><p><%= link_to conversation.recipients.first.email, profile_path(conversation.recipients.last.profile) %></p></td>
+            <td class="col-sm-4"><p><%= link_to conversation.recipients.first.email, profile_path(conversation.recipients.last.profile) %></p></td>
           <% end %>
         <% end %>
       </tr>
+      <% count += 1 %>
     <% end %>
   </tbody>
 
 </table>
-
-
-
-
-

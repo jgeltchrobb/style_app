@@ -1,20 +1,37 @@
-<h1><%= @conversation.subject %></h1>
+<h1>Subject: <%= @conversation.subject %></h1>
 
-<% @conversation.receipts_for(current_user).each do |receipt| %>
-  <div>
-    <% if current_user.profile.username.present? %>
-      <div><%= receipt.message.sender.profile.username %></div>
-    <% else %>
-      <div><%= receipt.message.sender.email %></div>
-    <% end %>
-    <p><%= receipt.message.body %></p>
-  </div>
-<% end %>
-
+<div class="message_container">
+  <% @conversation.receipts_for(current_user).each do |receipt| %>
+    <div>
+      <% if current_user.profile.username.present? %>
+        <% if receipt.message.sender.profile == current_user.profile %>
+          <div class="username_right"><%= link_to receipt.message.sender.profile.username, profile_path(receipt.message.sender.profile) %></div>
+        <% else %>
+          <div class="username_left"><%= link_to receipt.message.sender.profile.username, profile_path(receipt.message.sender.profile) %></div>
+        <% end %>
+      <% else %>
+        <% if receipt.message.sender.profile == current_user.profile %>
+          <div class="username_right"><%= receipt.message.sender.email %></div>
+        <% else %>
+          <div class="username_left"><%= receipt.message.sender.email %></div>
+        <% end %>        
+      <% end %>
+    </div>
+        <% if receipt.message.sender.profile == current_user.profile %>
+          <div class="message_right">
+            <%= receipt.message.body %>
+          </div>        
+        <% else %>
+          <div class="message_left"><%= receipt.message.body %></div>
+        <% end %>
+  <% end %>
+</div>
+<br>
 <%= form_tag conversation_messages_path(@conversation), method: :post do %>
   <div>
     <%= text_area_tag :body %>
   </div>
 
   <%= submit_tag %>
+
 <% end %>
