@@ -10,11 +10,15 @@
         <td class="col-sm-1"><%= link_to image_tag(profile.profile_pic_url(:medium)), profile_path(profile) %></td>
         <td class="col-sm-1"><strong><%= profile.username %></strong</td> 
         <td class="col-sm-5"><%= profile.bio %></td>
-        <td>
-          <% profile.rating.times do %>
-            <span class='fa fa-star checked_star'></span>
-          <% end %>
-        </td>
+        <% if profile.rating.present? %>
+          <td>
+            <% profile.rating.times do %>
+              <span class='fa fa-star checked_star'></span>
+            <% end %>
+          </td>
+        <% else %>
+          <td>No ratings yet</td>
+        <% end %>
         <% if profile.location.latitude.present? && current_user.profile.location.latitude.present? %>
           <% stylist_loc = [profile.location.latitude,profile.location.longitude] %>
           <td class="col-sm-1"><%= "#{Geocoder::Calculations.distance_between(@user_loc, stylist_loc, :units => :km)} km away" %></td>
