@@ -80,6 +80,8 @@ Create a .env file in the root of the directory, then add your own ENV variables
 
 ## 5. Workflow diagram
 
+![This is the workflow diagram](app/assets/images/flow_diagram_style_app.jpg)
+
 ## 6. ERD
 
 ![This is the ERD (its a PDF dude?!)](app/assets/images/erd.pdf)
