@@ -20,7 +20,7 @@
         <% if @profile.user_id != current_user.id %>
           <%= link_to 'Message', new_conversation_path(params: {:user_id => @profile.user.id}), class: "btn btn-success" %>
         <% end %>
-        <% if @profile.user.has_role?(:stylist) && @profile.id == Review.find_by(profile_id: @profile.id) %>
+        <% if @profile.user.has_role?(:stylist) && @profile.id == Review.find_by(profile_id: @profile.id).profile_id %>
         <%= link_to 'Reviews', reviews_path(:params => {profile_id: @profile.id}), class: "btn btn-info" %>
         <br><br>
         <% if @profile.rating.present? %>
